@@ -278,14 +278,26 @@ a, button {
    ========================================================================== */
 
 /* ==========================================================================
-   MARCADOR INICIO: PASO 2 - HERO SECTION (REVISADO Y COMPACTO EN DESKTOP)
+   MARCADOR INICIO: PASO 2 - HERO SECTION (REVISADO, ANCHO COMPLETO Y SCROLL CENTRADO)
    ========================================================================== */
+
+/* Animación de parpadeo y movimiento suave para el Scroll */
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translateY(5px);
+  }
+}
 
 .hero {
   position: relative;
   padding-top: 8rem;   /* Espacio justo y limpio debajo del Navbar */
-  padding-bottom: 4rem; /* Espacio proporcional antes de la sección 01/04 */
-  min-height: auto;     /* Eliminamos vh forzado para evitar huecos verticales */
+  padding-bottom: 3rem; /* Espacio proporcional antes de la siguiente sección */
+  min-height: auto;
   display: block;
   overflow: hidden;
 }
@@ -417,18 +429,18 @@ a, button {
   color: var(--text-secondary);
 }
 
-/* --- Visual con Corte Diagonal Proporcional (Desktop) --- */
+/* --- Visual con Corte Diagonal y Scroll Centrado --- */
 .hero-visual {
   position: relative;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
 }
 
 .hero-diagonal-card {
   width: 100%;
-  aspect-ratio: 16 / 10; /* Controla la altura de la foto proporcionalmente */
+  aspect-ratio: 16 / 10;
   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
@@ -446,18 +458,39 @@ a, button {
   transform: scale(1.03);
 }
 
+/* Indicador de Scroll en Desktop y Móvil (Marrón y Parpadeando) */
 .hero-scroll-indicator {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 1.2rem;
+  animation: scrollPulse 2.2s infinite ease-in-out;
+  cursor: pointer;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 12px;
+  background-color: var(--accent-primary);
+}
+
+.scroll-text {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent-primary);
+  text-transform: uppercase;
 }
 
 /* ==========================================================================
-   ADAPTACIÓN MÓVIL (ESTABLE Y SIN ZOOM AL HACER SCROLL)
+   ADAPTACIÓN MÓVIL
    ========================================================================== */
 @media (max-width: 850px) {
   .hero {
     padding-top: 5rem;
     padding-bottom: 2rem;
-    height: auto; /* Quitamos la altura forzada de dvh para evitar saltos de zoom */
+    height: auto;
     min-height: auto;
     display: block;
   }
@@ -530,31 +563,17 @@ a, button {
 
   .hero-diagonal-card {
     clip-path: none;
-    aspect-ratio: 16 / 11; /* Fijamos una proporción estable para que no estire la imagen */
+    aspect-ratio: 16 / 11;
     border-radius: 6px;
+    width: 100%;
     height: auto;
   }
 
   .hero-scroll-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
     margin-top: 1rem;
   }
-
-  .scroll-line {
-    width: 1px;
-    height: 10px;
-    background-color: var(--text-secondary);
-  }
-
-  .scroll-text {
-    font-size: 0.52rem;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-  }
 }
+
 /* ==========================================================================
    MARCADOR FIN: PASO 2 - HERO SECTION
    ========================================================================== */
