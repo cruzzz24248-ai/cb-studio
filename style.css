@@ -1,11 +1,11 @@
 /* ==========================================================================
-   MARCADOR INICIO: PASO 1 - RESET, VARIABLES Y NAVEGACIÓN (HEADER)
+   1. RESET, VARIABLES Y NAVEGACIÓN BASE
    ========================================================================== */
 
 /* 1.1 Importación de Fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* 1.2 Variables de Marca de CB STUDIO WEB */
+/* 1.2 Variables de Marca */
 :root {
   /* Paleta Oficial */
   --bg-main: #FBFBFA;          /* Fondo Principal */
@@ -24,20 +24,23 @@
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 1.3 Reset Estructural y Eliminación de Recuadro Selección Azul */
+/* 1.3 Reset Estructural y Accesibilidad */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent; /* Elimina recuadro azul/celeste en móviles */
+  -webkit-tap-highlight-color: transparent;
 }
 
 *:focus {
-  outline: none; /* Remueve borde predeterminado */
+  outline: none;
 }
 
+/* Foco Accesible por Teclado (WCAG 2.1 AA) */
 *:focus-visible {
-  outline: 1px solid var(--accent-primary); /* Borde elegante solo accesibilidad por teclado */
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 html {
@@ -63,13 +66,32 @@ a, button {
   cursor: pointer;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .container {
   width: 92%;
   max-width: var(--max-width);
   margin: 0 auto;
 }
 
-/* 1.4 Estilos de Header y Navegación Base */
+/* 1.4 Animaciones Scroll Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 1.5 Header y Navegación */
 .header {
   position: fixed;
   top: 0;
@@ -159,7 +181,7 @@ a, button {
   width: 100%;
 }
 
-/* Botón de Header */
+/* Botón Header */
 .btn-header {
   background-color: var(--accent-primary);
   color: #FFFFFF;
@@ -181,7 +203,6 @@ a, button {
   transform: translateY(-1px);
 }
 
-/* Visibilidad de Botones según Pantalla */
 .mobile-only-btn {
   display: none;
 }
@@ -206,7 +227,6 @@ a, button {
   transform-origin: center;
 }
 
-/* Animación Hamburguesa a X */
 .hamburger-btn.active .line-1 {
   transform: translateY(3.75px) rotate(45deg);
 }
@@ -215,73 +235,11 @@ a, button {
   transform: translateY(-3.75px) rotate(-45deg);
 }
 
-/* 1.5 Adaptación Móvil (Menú Desplegable de Arriba hacia Abajo) */
-@media (max-width: 900px) {
-  .desktop-only-btn {
-    display: none;
-  }
-
-  .hamburger-btn {
-    display: flex;
-  }
-
-  .nav-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: var(--bg-main);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-    padding: 2rem 1.5rem 2.5rem 1.5rem;
-    
-    /* Animación de Despliegue de Arriba hacia Abajo */
-    transform: translateY(-20px);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: var(--transition-smooth);
-    
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .nav-menu.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 1.4rem;
-    align-items: flex-start;
-  }
-
-  .nav-link {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-  }
-
-  .mobile-only-btn {
-    display: flex;
-    width: 100%;
-    padding: 0.8rem 1.5rem;
-    margin-top: 0.5rem;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 1 - RESET, VARIABLES Y NAVEGACIÓN (HEADER)
+   2. HERO SECTION
    ========================================================================== */
 
-/* ==========================================================================
-   MARCADOR INICIO: PASO 2 - HERO SECTION (REVISADO, ANCHO COMPLETO Y SCROLL CENTRADO)
-   ========================================================================== */
-
-/* Animación de parpadeo y movimiento suave para el Scroll */
 @keyframes scrollPulse {
   0%, 100% {
     opacity: 1;
@@ -295,10 +253,8 @@ a, button {
 
 .hero {
   position: relative;
-  padding-top: 8rem;   /* Espacio justo y limpio debajo del Navbar */
-  padding-bottom: 3rem; /* Espacio proporcional antes de la siguiente sección */
-  min-height: auto;
-  display: block;
+  padding-top: 8rem;
+  padding-bottom: 3rem;
   overflow: hidden;
 }
 
@@ -308,12 +264,8 @@ a, button {
   align-items: center;
   gap: 3.5rem;
   position: relative;
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
 }
 
-/* Indicador de Sección 01 / 04 */
 .hero-counter {
   position: absolute;
   right: -2rem;
@@ -336,7 +288,6 @@ a, button {
   background-color: var(--border-color);
 }
 
-/* --- Contenido Izquierdo --- */
 .hero-content {
   display: flex;
   flex-direction: column;
@@ -367,7 +318,6 @@ a, button {
 }
 
 .hero-title em {
-  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
 }
@@ -381,7 +331,6 @@ a, button {
   margin-bottom: 1.8rem;
 }
 
-/* Botones */
 .hero-actions {
   display: flex;
   align-items: center;
@@ -427,9 +376,9 @@ a, button {
   font-weight: 600;
   letter-spacing: 2px;
   color: var(--text-secondary);
+  text-transform: uppercase;
 }
 
-/* --- Visual con Corte Diagonal y Scroll Centrado --- */
 .hero-visual {
   position: relative;
   width: 100%;
@@ -458,7 +407,6 @@ a, button {
   transform: scale(1.03);
 }
 
-/* Indicador de Scroll en Desktop y Móvil (Marrón y Parpadeando) */
 .hero-scroll-indicator {
   display: flex;
   flex-direction: column;
@@ -466,7 +414,6 @@ a, button {
   gap: 0.3rem;
   margin-top: 1.2rem;
   animation: scrollPulse 2.2s infinite ease-in-out;
-  cursor: pointer;
 }
 
 .scroll-line {
@@ -483,103 +430,9 @@ a, button {
   text-transform: uppercase;
 }
 
-/* ==========================================================================
-   ADAPTACIÓN MÓVIL
-   ========================================================================== */
-@media (max-width: 850px) {
-  .hero {
-    padding-top: 5rem;
-    padding-bottom: 2rem;
-    height: auto;
-    min-height: auto;
-    display: block;
-  }
-
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hero-counter {
-    right: 0;
-    top: -0.2rem;
-    transform: none;
-  }
-
-  .counter-line {
-    height: 20px;
-  }
-
-  .hero-content {
-    margin-bottom: 0;
-  }
-
-  .hero-brand-tag {
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-title {
-    font-size: clamp(2rem, 7.2vw, 2.5rem);
-    margin-bottom: 0.7rem;
-    line-height: 1.1;
-  }
-
-  .hero-tagline {
-    font-size: 0.85rem;
-    margin-bottom: 1.2rem;
-    line-height: 1.45;
-    max-width: 95%;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin-bottom: 1.1rem;
-    width: 100%;
-  }
-
-  .btn-primary {
-    width: 100%;
-    text-align: center;
-    padding: 0.75rem 1.2rem;
-  }
-
-  .btn-secondary {
-    font-size: 0.68rem;
-    padding-bottom: 1px;
-  }
-
-  .hero-location {
-    font-size: 0.6rem;
-  }
-
-  .hero-visual {
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-
-  .hero-diagonal-card {
-    clip-path: none;
-    aspect-ratio: 16 / 11;
-    border-radius: 6px;
-    width: 100%;
-    height: auto;
-  }
-
-  .hero-scroll-indicator {
-    margin-top: 1rem;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 2 - HERO SECTION
-   ========================================================================== */
-
-/* ==========================================================================
-   MARCADOR INICIO: PASO 3 - ENFOQUE / PROPUESTA DE VALOR (01 / 04)
+   3. ENFOQUE / PROPUESTA DE VALOR
    ========================================================================== */
 
 .approach {
@@ -596,7 +449,6 @@ a, button {
   gap: 4rem;
 }
 
-/* --- Columna Izquierda --- */
 .approach-header {
   display: flex;
   flex-direction: column;
@@ -640,7 +492,6 @@ a, button {
   max-width: 440px;
 }
 
-/* --- Columna Derecha: Pilares --- */
 .approach-pillars {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -689,46 +540,9 @@ a, button {
   line-height: 1.5;
 }
 
-/* --- Adaptación Responsive --- */
-@media (max-width: 980px) {
-  .approach-container {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
-
-  .approach-description {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 700px) {
-  .approach {
-    padding: 3.8rem 0;
-  }
-
-  .approach-pillars {
-    grid-template-columns: 1fr;
-    gap: 2.2rem;
-  }
-
-  .pillar-item {
-    padding: 0;
-    border-left: none;
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.8rem;
-  }
-
-  .pillar-item:first-child {
-    border-top: none;
-    padding-top: 0;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 3 - ENFOQUE / PROPUESTA DE VALOR (01 / 04)
-   ========================================================================== */
-/* ==========================================================================
-   MARCADOR INICIO: PASO 4 - PORTAFOLIO DE PROYECTOS (REVISADO RESPONSIVE)
+   4. PORTAFOLIO DE PROYECTOS
    ========================================================================== */
 
 .projects {
@@ -736,25 +550,14 @@ a, button {
   background-color: var(--bg-main);
 }
 
-/* Grilla principal del contenedor */
-.projects-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: flex-end;
-  gap: 2.5rem 0;
-}
-
-/* Descomponemos el header para que sus hijos sean items directos del grid */
 .projects-header {
-  display: contents;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
 }
 
 .projects-title-group {
-  grid-column: 1;
-  grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -778,9 +581,6 @@ a, button {
 }
 
 .projects-all-link {
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 1.5px;
@@ -796,16 +596,12 @@ a, button {
   border-bottom-color: var(--accent-primary);
 }
 
-/* Grilla de 4 Columnas (Desktop) */
 .projects-grid {
-  grid-column: 1 / -1;
-  grid-row: 2;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
 }
 
-/* Tarjeta de Proyecto individual */
 .project-card {
   position: relative;
   aspect-ratio: 3 / 4;
@@ -813,9 +609,8 @@ a, button {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 1.5rem;
-  text-decoration: none;
   background-color: #1a1a1a;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
@@ -831,77 +626,54 @@ a, button {
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    180deg, 
-    rgba(0, 0, 0, 0.65) 0%, 
-    rgba(0, 0, 0, 0.15) 45%, 
-    rgba(0, 0, 0, 0.75) 100%
-  );
-  z-index: 2;
-  transition: opacity 0.4s ease;
-}
-
-.project-card-top {
+.project-content {
   position: relative;
   z-index: 3;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0) 40%, 
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  margin: -1.5rem;
+  padding: 1.5rem;
 }
 
-.project-name {
+.project-top h3 {
   font-family: var(--font-serif);
   font-size: 1.35rem;
   font-weight: 400;
   color: #FFFFFF;
   line-height: 1.15;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   letter-spacing: -0.3px;
 }
 
-.project-concept {
+.project-top span {
   font-size: 0.55rem;
   font-weight: 600;
   letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
 }
 
-.project-arrow {
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.4s ease, color 0.4s ease;
-}
-
-.project-card-bottom {
-  position: relative;
-  z-index: 3;
+.project-bottom {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  width: 100%;
 }
 
-.project-services {
+.project-bottom span:first-child {
   font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.85);
-  font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 75%;
 }
 
-.project-counter {
+.project-bottom span:last-child {
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 1px;
@@ -912,91 +684,9 @@ a, button {
   transform: scale(1.06);
 }
 
-.project-card:hover .project-arrow {
-  transform: translate(3px, -3px);
-  color: #E2DDD5;
-}
 
 /* ==========================================================================
-   ADAPTACIÓN MÓVIL (TÍTULO ARRIBA, 2X2 PROYECTOS, BOTÓN ABAJO CENTRADO)
-   ========================================================================== */
-@media (max-width: 850px) {
-  .projects {
-    padding: 3.8rem 0;
-  }
-
-  .projects-container {
-    grid-template-columns: 1fr;
-    gap: 1.8rem;
-  }
-
-  .projects-title-group {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .projects-grid {
-    grid-column: 1;
-    grid-row: 2;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-  }
-
-  /* Ubicamos el botón como 3er elemento en la grilla vertical */
-  .projects-all-link {
-    grid-column: 1;
-    grid-row: 3;
-    justify-self: center;
-    margin-top: 0.8rem;
-    font-size: 0.65rem;
-    letter-spacing: 1.8px;
-  }
-
-  .project-card {
-    padding: 1rem;
-    aspect-ratio: 4 / 5;
-  }
-
-  .project-name {
-    font-size: 1rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .project-concept {
-    font-size: 0.48rem;
-    letter-spacing: 1px;
-  }
-
-  .project-arrow svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .project-services {
-    font-size: 0.55rem;
-    max-width: 70%;
-  }
-
-  .project-counter {
-    font-size: 0.55rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .projects-grid {
-    gap: 0.6rem;
-  }
-  
-  .project-card {
-    padding: 0.8rem;
-  }
-}
-
-/* ==========================================================================
-   MARCADOR FIN: PASO 4 - PORTAFOLIO DE PROYECTOS
-   ========================================================================== */
-/* ==========================================================================
-   MARCADOR INICIO: PASO 5 - SECCIÓN DE PROCESO
+   5. SECCIÓN DE PROCESO
    ========================================================================== */
 
 .process {
@@ -1007,16 +697,12 @@ a, button {
 }
 
 .process-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr auto 1.3fr;
   align-items: center;
   gap: 2.5rem;
 }
 
-/* Imagen Lateral */
 .process-visual {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1036,7 +722,6 @@ a, button {
   transform: scale(1.03);
 }
 
-/* Encabezado */
 .process-header {
   display: flex;
   flex-direction: column;
@@ -1052,7 +737,6 @@ a, button {
   letter-spacing: -0.5px;
 }
 
-/* Separador Vertical */
 .process-divider {
   width: 1px;
   height: 100%;
@@ -1061,7 +745,6 @@ a, button {
   align-self: center;
 }
 
-/* Lista de Pasos */
 .process-steps {
   display: flex;
   flex-direction: column;
@@ -1112,60 +795,9 @@ a, button {
   line-height: 1.5;
 }
 
-/* Adaptación Responsive */
-@media (max-width: 1024px) {
-  .process-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .process-visual {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 9;
-  }
-
-  .process-divider {
-    display: none;
-  }
-
-  .process-header {
-    grid-column: 1 / -1;
-  }
-
-  .process-steps {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 850px) {
-  .process {
-    padding: 3.8rem 0;
-  }
-
-  .process-container {
-    grid-template-columns: 1fr;
-    gap: 1.8rem;
-  }
-
-  .process-step-item {
-    gap: 1.2rem;
-    padding: 1rem 0;
-  }
-
-  .step-title {
-    font-size: 0.92rem;
-  }
-
-  .step-text {
-    font-size: 0.78rem;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 5 - SECCIÓN DE PROCESO
-   ========================================================================== */
-/* ==========================================================================
-   MARCADOR INICIO: PASO 6 - SECCIÓN DE SERVICIOS
+   6. SECCIÓN DE SERVICIOS
    ========================================================================== */
 
 .services {
@@ -1175,16 +807,12 @@ a, button {
 }
 
 .services-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 3.5rem;
   align-items: start;
 }
 
-/* Encabezado */
 .services-header {
   display: flex;
   flex-direction: column;
@@ -1202,7 +830,6 @@ a, button {
   letter-spacing: -0.5px;
 }
 
-/* Cuadrícula de Servicios */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1255,59 +882,9 @@ a, button {
   line-height: 1.55;
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
-  .services-container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .services-header {
-    position: relative;
-    top: 0;
-  }
-
-  .services-grid {
-    border-left: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 0;
-  }
-
-  .service-card {
-    padding: 1.2rem 1.5rem;
-    border-right: 1px solid var(--border-color);
-  }
-
-  .service-card:nth-child(2n) {
-    border-right: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .services {
-    padding: 3.8rem 0;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card {
-    padding: 1.2rem 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .service-card:last-child {
-    border-bottom: none;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 6 - SECCIÓN DE SERVICIOS
-   ========================================================================== */
-/* ==========================================================================
-   MARCADOR INICIO: PASO 7 - SECCIÓN SOBRE CB
+   7. SECCIÓN SOBRE CB
    ========================================================================== */
 
 .about {
@@ -1317,16 +894,12 @@ a, button {
 }
 
 .about-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1.1fr 1.1fr auto 1.2fr;
   align-items: center;
   gap: 2.5rem;
 }
 
-/* Imagen de marca */
 .about-visual {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1346,7 +919,6 @@ a, button {
   transform: scale(1.03);
 }
 
-/* Encabezado */
 .about-header {
   display: flex;
   flex-direction: column;
@@ -1362,7 +934,6 @@ a, button {
   letter-spacing: -0.5px;
 }
 
-/* Separador Vertical */
 .about-divider {
   width: 1px;
   height: 100%;
@@ -1371,7 +942,6 @@ a, button {
   align-self: center;
 }
 
-/* Cuerpo de texto */
 .about-body {
   display: flex;
   flex-direction: column;
@@ -1399,53 +969,11 @@ a, button {
   flex-shrink: 0;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .about-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .about-visual {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 9;
-  }
-
-  .about-divider {
-    display: none;
-  }
-
-  .about-header {
-    grid-column: 1 / -1;
-  }
-
-  .about-body {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 640px) {
-  .about {
-    padding: 3.8rem 0;
-  }
-
-  .about-description {
-    font-size: 0.88rem;
-  }
-
-  .about-location {
-    font-size: 0.8rem;
-  }
-}
 
 /* ==========================================================================
-   MARCADOR FIN: PASO 7 - SECCIÓN SOBRE CB
-   ========================================================================== */
-/* ==========================================================================
-   MARCADOR INICIO: PASO 8 - SECCIÓN CTA Y FOOTER
+   8. SECCIÓN CTA Y FOOTER
    ========================================================================== */
 
-/* --- Sección CTA --- */
 .cta {
   padding: 5.5rem 0;
   background-color: var(--bg-main);
@@ -1453,9 +981,6 @@ a, button {
 }
 
 .cta-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   align-items: center;
@@ -1500,7 +1025,6 @@ a, button {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 1.2px;
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -1508,9 +1032,9 @@ a, button {
 }
 
 .cta-btn:hover {
-  background-color: #522d1f;
+  background-color: var(--text-primary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(110, 61, 40, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .cta-quote {
@@ -1532,7 +1056,7 @@ a, button {
   line-height: 1.55;
 }
 
-/* --- Footer Oscuro --- */
+/* Footer Oscuro */
 .footer {
   background-color: #121110;
   color: #e5dfd8;
@@ -1541,9 +1065,6 @@ a, button {
 }
 
 .footer-container {
-  width: 92%;
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1551,7 +1072,6 @@ a, button {
   flex-wrap: wrap;
 }
 
-/* Logo Footer */
 .footer-brand {
   display: flex;
   align-items: center;
@@ -1561,7 +1081,6 @@ a, button {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  text-decoration: none;
   color: #ffffff;
 }
 
@@ -1583,9 +1102,9 @@ a, button {
   font-weight: 600;
   letter-spacing: 2px;
   color: #ffffff;
+  text-transform: uppercase;
 }
 
-/* Navegación Footer */
 .footer-nav {
   display: flex;
   align-items: center;
@@ -1594,10 +1113,10 @@ a, button {
 
 .footer-link {
   color: #a09990;
-  text-decoration: none;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 1.5px;
+  text-transform: uppercase;
   transition: color 0.3s ease;
 }
 
@@ -1605,7 +1124,6 @@ a, button {
   color: #ffffff;
 }
 
-/* Redes Sociales */
 .footer-socials {
   display: flex;
   align-items: center;
@@ -1625,7 +1143,6 @@ a, button {
   transform: translateY(-2px);
 }
 
-/* Ubicación y Copyright */
 .footer-meta {
   display: flex;
   align-items: center;
@@ -1634,52 +1151,232 @@ a, button {
   color: #807a72;
 }
 
-/* Adaptación Responsive */
+
+/* ==========================================================================
+   9. ADAPTACIÓN RESPONSIVE UNIFICADA (MEDIA QUERIES)
+   ========================================================================== */
+
 @media (max-width: 1024px) {
+  .process-container,
+  .about-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .process-visual,
+  .about-visual {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  .process-divider,
+  .about-divider {
+    display: none;
+  }
+
+  .process-header,
+  .process-steps,
+  .about-header,
+  .about-body {
+    grid-column: 1 / -1;
+  }
+
+  .services-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .services-header {
+    position: relative;
+    top: 0;
+  }
+
+  .services-grid {
+    border-left: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 0;
+  }
+
+  .service-card {
+    padding: 1.2rem 1.5rem;
+    border-right: 1px solid var(--border-color);
+  }
+
+  .service-card:nth-child(2n) {
+    border-right: none;
+  }
+
   .cta-container {
     grid-template-columns: 1fr;
     gap: 2.2rem;
   }
 
-  .cta-action {
+  .cta-action,
+  .cta-quote {
     padding-left: 0;
     border-left: none;
     border-top: 1px solid var(--border-color);
     padding-top: 1.8rem;
   }
+}
 
-  .cta-quote {
-    padding-left: 0;
+@media (max-width: 900px) {
+  .desktop-only-btn {
+    display: none;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-main);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    padding: 2rem 1.5rem 2.5rem 1.5rem;
+    transform: translateY(-20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 1.4rem;
+    align-items: flex-start;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  .mobile-only-btn {
+    display: flex;
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .approach-container {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .approach-description {
+    max-width: 100%;
+  }
+
+  .projects-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .hero {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-counter {
+    right: 0;
+    top: -0.2rem;
+    transform: none;
+  }
+
+  .counter-line {
+    height: 20px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-diagonal-card {
+    clip-path: none;
+    aspect-ratio: 16 / 11;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .approach,
+  .projects,
+  .process,
+  .services,
+  .about,
+  .cta {
+    padding: 3.8rem 0;
+  }
+
+  .approach-pillars,
+  .services-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-item {
+    padding: 1.8rem 0 0 0;
+    border-left: none;
     border-top: 1px solid var(--border-color);
-    padding-top: 1.8rem;
+  }
+
+  .pillar-item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .service-card {
+    padding: 1.2rem 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .service-card:last-child {
+    border-bottom: none;
   }
 
   .footer-container {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
-  }
-
-  .footer-nav {
-    flex-wrap: wrap;
-    gap: 1.2rem 1.8rem;
-  }
-
-  .footer-meta {
-    width: 100%;
-    justify-content: space-between;
-    border-top: 1px solid #22201e;
-    padding-top: 1.5rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .cta {
-    padding: 3.8rem 0;
-  }
-
-  .footer {
-    padding: 2.5rem 0;
   }
 
   .footer-nav {
@@ -1692,9 +1389,8 @@ a, button {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+    width: 100%;
+    border-top: 1px solid #22201e;
+    padding-top: 1.5rem;
   }
 }
-
-/* ==========================================================================
-   MARCADOR FIN: PASO 8 - SECCIÓN CTA Y FOOTER
-   ========================================================================== */

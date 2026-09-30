@@ -27,9 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateHeader();
 
-  window.addEventListener('scroll', updateHeader, {
-    passive: true
-  });
+  window.addEventListener('scroll', updateHeader, { passive: true });
 
   // 2. Control del Menú Hamburguesa Móvil
   if (header && hamburgerBtn && navMenu) {
@@ -38,30 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
       navMenu.classList.add('active');
       hamburgerBtn.classList.add('active');
 
-      hamburgerBtn.setAttribute(
-        'aria-expanded',
-        'true'
-      );
-
-      hamburgerBtn.setAttribute(
-        'aria-label',
-        'Cerrar menú de navegación'
-      );
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+      hamburgerBtn.setAttribute('aria-label', 'Cerrar menú de navegación');
     };
 
     const closeMenu = () => {
       navMenu.classList.remove('active');
       hamburgerBtn.classList.remove('active');
 
-      hamburgerBtn.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-
-      hamburgerBtn.setAttribute(
-        'aria-label',
-        'Abrir menú de navegación'
-      );
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      hamburgerBtn.setAttribute('aria-label', 'Abrir menú de navegación');
     };
 
     const toggleMenu = () => {
@@ -115,19 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 1 - HEADER Y MENÚ
      ========================================================================== */
 
 
   /* ==========================================================================
-     PASO 2 - COMPORTAMIENTO HERO SECTION
+     PASO 2 - COMPORTAMIENTO HERO SECTION (EFECTO 3D TILT)
      ========================================================================== */
 
-  const heroCard = document.querySelector(
-    '.hero-diagonal-card'
-  );
+  const heroCard = document.querySelector('.hero-diagonal-card');
 
   if (
     heroCard &&
@@ -143,18 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       animationFrame = requestAnimationFrame(() => {
 
-        const {
-          left,
-          top,
-          width,
-          height
-        } = heroCard.getBoundingClientRect();
+        const { left, top, width, height } = heroCard.getBoundingClientRect();
 
-        const x =
-          (e.clientX - left) / width - 0.5;
-
-        const y =
-          (e.clientY - top) / height - 0.5;
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
 
         heroCard.style.transform =
           `perspective(1000px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg)`;
@@ -164,12 +137,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     heroCard.addEventListener('mouseleave', () => {
-
       heroCard.style.transform =
         'perspective(1000px) rotateY(0deg) rotateX(0deg)';
     });
   }
-
 
   /* ==========================================================================
      MARCADOR FIN: PASO 2 - HERO SECTION
@@ -177,14 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================================================
-     FUNCIÓN GENERAL DE REVEAL
-     Mantiene los tiempos originales de cada sección.
+     FUNCIÓN GENERAL DE REVEAL (IntersectionObserver con Staggering)
      ========================================================================== */
 
-  const createReveal = (
-    elements,
-    options = {}
-  ) => {
+  const createReveal = (elements, options = {}) => {
 
     if (!elements.length) return;
 
@@ -195,74 +162,51 @@ document.addEventListener('DOMContentLoaded', () => {
       threshold = 0.15
     } = options;
 
-    const reduceMotion =
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Si el usuario prefiere menos movimiento,
-    // mostramos directamente los elementos.
+    // Si el usuario prefiere menos movimiento, mostramos directamente.
     if (reduceMotion) {
-
       elements.forEach(element => {
         element.style.opacity = '1';
         element.style.transform = 'none';
       });
-
       return;
     }
 
     // Estado inicial
     elements.forEach(element => {
-
       element.style.opacity = '0';
-
       element.style.transform = translate;
-
       element.style.transition =
-        `opacity ${duration} ease, transform ${duration} ease`;
+        `opacity ${duration} cubic-bezier(0.16, 1, 0.3, 1), transform ${duration} cubic-bezier(0.16, 1, 0.3, 1)`;
     });
 
     // Intersection Observer
     if ('IntersectionObserver' in window) {
 
-      const observer =
-        new IntersectionObserver(
-          (entries) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
 
-            entries.forEach(entry => {
+            const index = elements.indexOf(entry.target);
 
-              if (!entry.isIntersecting) return;
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0) translateX(0)';
+            }, Math.max(0, index * delay));
 
-              // Buscamos la posición REAL del elemento
-              // para mantener el stagger visual.
-              const index =
-                Array.from(elements)
-                  .indexOf(entry.target);
-
-              setTimeout(() => {
-
-                entry.target.style.opacity = '1';
-
-                entry.target.style.transform =
-                  'translateY(0) translateX(0)';
-
-              }, Math.max(0, index * delay));
-
-              observer.unobserve(entry.target);
-            });
-          },
-          {
-            threshold
-          }
-        );
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold }
+      );
 
       elements.forEach(element => {
         observer.observe(element);
       });
 
     } else {
-
       // Fallback para navegadores antiguos
       elements.forEach(element => {
         element.style.opacity = '1';
@@ -276,8 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
      PASO 3 - REVEAL DE SECCIÓN ENFOQUE (01 / 04)
      ========================================================================== */
 
-  const approachPillars =
-    document.querySelectorAll('.pillar-item');
+  const approachPillars = document.querySelectorAll('.pillar-item');
 
   createReveal(
     Array.from(approachPillars),
@@ -289,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 3 - ENFOQUE
      ========================================================================== */
@@ -299,8 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
      PASO 4 - REVEAL DE TARJETAS DE PROYECTO
      ========================================================================== */
 
-  const projectCards =
-    document.querySelectorAll('.project-card');
+  const projectCards = document.querySelectorAll('.project-card');
 
   createReveal(
     Array.from(projectCards),
@@ -312,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 4 - PROYECTOS
      ========================================================================== */
@@ -322,8 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
      PASO 5 - REVEAL DE PASOS DEL PROCESO
      ========================================================================== */
 
-  const processSteps =
-    document.querySelectorAll('.process-step-item');
+  const processSteps = document.querySelectorAll('.process-step-item');
 
   createReveal(
     Array.from(processSteps),
@@ -335,7 +274,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 5 - PROCESO
      ========================================================================== */
@@ -345,8 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
      PASO 6 - ANIMACIÓN DE SERVICIOS
      ========================================================================== */
 
-  const serviceCards =
-    document.querySelectorAll('.service-card');
+  const serviceCards = document.querySelectorAll('.service-card');
 
   createReveal(
     Array.from(serviceCards),
@@ -358,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 6 - SERVICIOS
      ========================================================================== */
@@ -368,10 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
      PASO 7 - ANIMACIÓN SOBRE CB
      ========================================================================== */
 
-  const aboutElements =
-    document.querySelectorAll(
-      '.about-visual, .about-header, .about-body'
-    );
+  const aboutElements = document.querySelectorAll('.about-visual, .about-header, .about-body');
 
   createReveal(
     Array.from(aboutElements),
@@ -383,20 +316,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
   /* ==========================================================================
      MARCADOR FIN: PASO 7 - SOBRE CB
      ========================================================================== */
 
 
   /* ==========================================================================
-     PASO 8 - NAVEGACIÓN SUAVE Y REVEAL CTA
+     PASO 8 - NAVEGACIÓN SUAVE (CON COMPENSACIÓN DE HEADER) Y REVEAL CTA
      ========================================================================== */
 
-  const ctaElements =
-    document.querySelectorAll(
-      '.cta-header, .cta-action, .cta-quote'
-    );
+  const ctaElements = document.querySelectorAll('.cta-header, .cta-action, .cta-quote');
 
   createReveal(
     Array.from(ctaElements),
@@ -408,51 +337,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
+  // Smooth scroll universal con descuento de la altura del header sticky
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-  // Smooth scroll universal para enlaces internos (#)
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
 
-      anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
 
-        const targetId =
-          this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
 
-        if (
-          !targetId ||
-          targetId === '#'
-        ) {
-          return;
-        }
+      const targetElement = document.querySelector(targetId);
 
-        const targetElement =
-          document.querySelector(targetId);
+      if (!targetElement) return;
 
-        if (!targetElement) return;
+      e.preventDefault();
 
-        e.preventDefault();
+      const headerOffset = header ? header.offsetHeight : 0;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-        targetElement.scrollIntoView({
-          behavior:
-            window.matchMedia(
-              '(prefers-reduced-motion: reduce)'
-            ).matches
-              ? 'auto'
-              : 'smooth',
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-          block: 'start'
-        });
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: reduceMotion ? 'auto' : 'smooth'
       });
     });
-
+  });
 
   /* ==========================================================================
      MARCADOR FIN: PASO 8 - CTA Y NAVEGACIÓN
      ========================================================================== */
 
 });
-
 
 /* ==========================================================================
    MARCADOR FIN: CB STUDIO WEB - JAVASCRIPT
