@@ -238,13 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================================================
-     PASO 4 - REVEAL DE TARJETAS DE PROYECTO
+     PASO 4 - REVEAL DE TARJETAS DE SOLUCIONES
      ========================================================================== */
 
-  const projectCards = document.querySelectorAll('.project-card');
+  const solutionCards = document.querySelectorAll('.solution-card');
 
   createReveal(
-    Array.from(projectCards),
+    Array.from(solutionCards),
     {
       translate: 'translateY(20px)',
       duration: '0.6s',
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   /* ==========================================================================
-     MARCADOR FIN: PASO 4 - PROYECTOS
+     MARCADOR FIN: PASO 4 - SOLUCIONES
      ========================================================================== */
 
 
