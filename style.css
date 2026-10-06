@@ -1569,3 +1569,54 @@ img {
     height: 25px;
   }
 }
+
+/* ==========================================================================
+   NUEVAS SECCIONES: INCLUIDO · TRABAJOS · PREGUNTAS · FORMULARIO
+   ========================================================================== */
+.includes { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; margin-top: 2rem; }
+.includes li { font-size: 0.78rem; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 50px; color: var(--text-secondary); }
+
+.work { padding: 5.5rem 0; border-top: 1px solid var(--border-color); }
+.work .section-title { margin: 0.8rem 0 2.5rem; }
+.work-card { background: #121212; color: #fff; border-radius: 6px; padding: 2.5rem 2rem; max-width: 820px; }
+.work-kind { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-detail); }
+.work-name { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; margin: 0.6rem 0 1rem; }
+.work-text { color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 1.2rem; }
+.work-list { list-style: none; margin-bottom: 2rem; }
+.work-list li { padding: 0.4rem 0 0.4rem 1.4rem; position: relative; color: rgba(255,255,255,0.85); font-size: 0.92rem; }
+.work-list li::before { content: "—"; position: absolute; left: 0; color: var(--accent-detail); }
+.work-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+.work-actions .btn-primary { display: inline-block; }
+.work-link { font-size: 0.7rem; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
+
+.faq { padding: 5.5rem 0; border-top: 1px solid var(--border-color); }
+.faq .section-title { margin: 0.8rem 0 2rem; }
+.faq-list { max-width: 760px; }
+.faq-item { border-bottom: 1px solid var(--border-color); }
+.faq-item summary { cursor: pointer; list-style: none; padding: 1.2rem 2rem 1.2rem 0; font-weight: 500; position: relative; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; right: 0; color: var(--accent-primary); font-size: 1.3rem; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-item p { color: var(--text-secondary); padding: 0 0 1.3rem; line-height: 1.7; }
+
+select.form-input { appearance: none; background: transparent; cursor: pointer; }
+.form-status { margin-top: 1rem; font-size: 0.9rem; line-height: 1.6; }
+.form-status.is-ok { color: var(--accent-primary); font-weight: 500; }
+.form-status.is-error { color: #a33a2f; }
+.form-status a { text-decoration: underline; }
+
+/* TRABAJOS: tarjeta con vista previa real */
+.work-intro { color: var(--text-secondary); max-width: 520px; margin: -1rem 0 2.5rem; line-height: 1.7; }
+.work-card { display: grid; grid-template-columns: 1.35fr 1fr; gap: 2.5rem; align-items: center; max-width: none; padding: 1.2rem; }
+.work-preview { display: block; position: relative; border-radius: 8px; overflow: hidden; background: #1c1c1c; box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+.work-browser { display: flex; gap: 6px; padding: 10px 12px; background: #262626; }
+.work-browser span { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+.work-frame { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.work-frame iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; pointer-events: none; transform-origin: 0 0; transform: scale(0.3); background: #0D0D0C; }
+.work-preview::after { content: "Abrir demo \2192"; position: absolute; right: 12px; bottom: 12px; font-size: 0.65rem; letter-spacing: 1.4px; text-transform: uppercase; background: rgba(0,0,0,0.75); color: #fff; padding: 8px 14px; border-radius: 50px; }
+.work-info { padding: 1rem 1rem 1rem 0; }
+.work-more { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 0.5px; }
+@media (max-width: 900px) {
+  .work-card { grid-template-columns: 1fr; gap: 1.5rem; }
+  .work-info { padding: 0 0.6rem 0.8rem; }
+}
