@@ -1,6 +1,7 @@
 /* ==========================================================================
    CB STUDIO WEB — SCRIPT ÚNICO
    Header y menú · Hero 3D · Reveals · Scroll suave · Formulario · Vista previa
+   · Progreso de lectura · Menú activo · Reveals extra
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const $ = (s) => document.querySelector(s);
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------- REVEALS (aparición al hacer scroll) ----------
-  const reveal = (selector, { translate = 'translateY(20px)', duration = '0.6s', delay = 100, threshold = 0.15 } = {}) => {
+  const reveal = (selector, { translate = 'translateY(36px)', duration = '1s', delay = 140, threshold = 0.15 } = {}) => {
     const els = $$(selector);
     if (!els.length || reduceMotion || !('IntersectionObserver' in window)) return;
     const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.transition = `opacity ${duration} ${ease}, transform ${duration} ${ease}`;
     });
     const obs = new IntersectionObserver((entries) => {
+      let n = 0; // escalonado solo entre los elementos que aparecen juntos
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
@@ -65,25 +67,26 @@ document.addEventListener('DOMContentLoaded', () => {
           el.style.opacity = '1';
           el.style.transform = 'translateY(0) translateX(0)';
           // Devuelve el control a la hoja de estilos para que funcione el hover
-          setTimeout(() => { el.style.transform = ''; el.style.transition = ''; }, 800);
-        }, els.indexOf(el) * delay);
+          setTimeout(() => { el.style.transform = ''; el.style.transition = ''; }, 1300);
+        }, n++ * delay);
         obs.unobserve(el);
       });
     }, { threshold });
     els.forEach(el => obs.observe(el));
   };
 
-  reveal('.pillar-item', { translate: 'translateY(15px)', delay: 120, threshold: 0.2 });
+  reveal('.pillar-item', { translate: 'translateY(28px)', delay: 150, threshold: 0.2 });
   reveal('.solution-card');
   reveal('.work-card', { threshold: 0.1 });
-  reveal('.process-step-item', { translate: 'translateX(15px)', duration: '0.5s', delay: 120, threshold: 0.2 });
-  reveal('.about-visual, .about-header, .about-body', { delay: 120, threshold: 0.2 });
-  reveal('.cta-header, .cta-action, .cta-quote', { delay: 120 });
+  reveal('.process-step-item', { translate: 'translateX(28px)', duration: '0.9s', delay: 150, threshold: 0.2 });
+  reveal('.about-visual, .about-header, .about-body', { delay: 150, threshold: 0.2 });
+  reveal('.cta-header, .cta-action, .cta-quote', { delay: 150 });
 
   // ---------- SCROLL SUAVE CON COMPENSACIÓN DEL HEADER ----------
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');
-    if (!id || id === '#') return;
+    if (!id) return;
+    if (id === '#') { e.preventDefault(); window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
     const target = $(id);
     if (!target) return;
     e.preventDefault();
@@ -124,3 +127,53 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('load', fitPreviews);
   window.addEventListener('resize', fitPreviews);
 });
+
+/* ==========================================================================
+   MEJORAS: progreso de lectura · menú activo · reveals extra
+   ========================================================================== */
+(() => {
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Barra de progreso de lectura
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+  let tick = false;
+  const setBar = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
+    tick = false;
+  };
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(setBar); } }, { passive: true });
+  setBar();
+
+  if (!('IntersectionObserver' in window)) return;
+
+  // Menú: marca la sección que se está viendo
+  const links = $$('.nav-link');
+  const spy = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    links.forEach((l) => l.classList.toggle('is-current', l.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  // Observa todas las secciones: las que no tienen link (hero, enfoque) apagan el resaltado
+  $$('main section[id], footer[id]').forEach((s) => spy.observe(s));
+
+  // Reveals extra (usa .reveal / .active del CSS)
+  if (reduce) return;
+  const groups = ['.solutions-header', '.includes li', '.work .section-tag, .work .section-title, .work-intro', '.work-more',
+    '.faq .section-tag, .faq .section-title', '.faq-item', '.contact-info > *', '.contact-form .form-group'];
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add('active');
+    io.unobserve(el);
+    setTimeout(() => { el.style.transitionDelay = ''; }, 1800);
+  }), { threshold: 0.15 });
+  groups.forEach((sel) => $$(sel).forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = Math.min(i, 4) * 90 + 'ms';
+    io.observe(el);
+  }));
+})();

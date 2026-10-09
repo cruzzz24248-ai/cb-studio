@@ -3,7 +3,6 @@
    ========================================================================== */
 
 /* 1.1 Importación de Fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* 1.2 Variables de Marca */
 :root {
@@ -81,8 +80,8 @@ img {
 /* 1.4 Animaciones Scroll Reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(34px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -1666,3 +1665,29 @@ select.form-input { appearance: none; background: transparent; cursor: pointer; 
 .work-browser span { background: #C9C4BC; }
 .work-preview::after { background: rgba(255, 255, 255, 0.92); color: var(--text-primary); }
 .work-intro { color: var(--text-secondary); }
+
+/* ==========================================================================
+   MEJORAS: entrada del hero, progreso, menú activo, microinteracciones
+   ========================================================================== */
+::selection { background: var(--accent-primary); color: #fff; }
+.scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent-primary); transform: scaleX(0); transform-origin: 0 50%; z-index: 1100; pointer-events: none; }
+.nav-link.is-current { color: var(--text-primary); }
+.nav-link.is-current::after { width: 100%; }
+.btn-primary:active, .btn-header:active, .cta-btn:active { transform: translateY(0) scale(0.98); }
+.solution-card:hover .solution-top h3 { color: var(--accent-primary); }
+.solution-top h3 { transition: color 0.35s ease; }
+
+/* Entrada orquestada del hero (una sola vez al cargar) */
+@keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero-content > * { animation: heroIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-content > :nth-child(2) { animation-delay: 0.1s; }
+.hero-content > :nth-child(3) { animation-delay: 0.2s; }
+.hero-content > :nth-child(4) { animation-delay: 0.3s; }
+.hero-content > :nth-child(5) { animation-delay: 0.4s; }
+.hero-visual { animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+
+/* Respeta a quien pide menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}

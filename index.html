@@ -12,21 +12,18 @@
   <meta name="author" content="CB Studio Web">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="language" content="Spanish">
-  <link rel="canonical" href="https://cbstudioweb.vercel.app/">
+  <link rel="canonical" href="https://cbstudioweb.com/">
 
   <!-- Favicons Ecosistema Completo -->
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236B4226'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23fff'%3ECB%3C/text%3E%3C/svg%3E">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cbstudioweb.vercel.app/">
+  <meta property="og:url" content="https://cbstudioweb.com/">
   <meta property="og:title" content="CB Studio Web — Diseño y Desarrollo Web">
   <meta property="og:description" content="Sitios web a medida que transmiten confianza y convierten visitas en consultas.">
-  <meta property="og:image" content="https://cbstudioweb.vercel.app/img/og-cb-studio.webp">
-  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image" content="https://cbstudioweb.com/img/og-cb-studio.webp">
+  <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="CB Studio Web — Tu marca merece verse a la altura">
@@ -38,7 +35,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CB Studio Web — Diseño y Desarrollo Web">
   <meta name="twitter:description" content="Sitios web a medida que transmiten confianza y convierten visitas en consultas.">
-  <meta name="twitter:image" content="https://cbstudioweb.vercel.app/img/og-cb-studio.jpg">
+  <meta name="twitter:image" content="https://cbstudioweb.com/img/og-cb-studio.webp">
 
   <!-- Preconexión de Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,11 +51,11 @@
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "CB Studio Web",
-    "image": "https://cbstudioweb.vercel.app/img/og-cb-studio.jpg",
-    "logo": "https://cbstudioweb.vercel.app/img/logo.png",
+    "image": "https://cbstudioweb.com/img/og-cb-studio.webp",
     "description": "Estudio de diseño y desarrollo web que crea experiencias digitales a medida para marcas y empresas.",
-    "url": "https://cbstudioweb.vercel.app/",
+    "url": "https://cbstudioweb.com/",
     "email": "cbstudioweb02@gmail.com",
+    "telephone": "+5493525632567",
     "priceRange": "$$",
     "inLanguage": "es-AR",
     "serviceType": [
@@ -561,10 +558,10 @@
         <!-- Formulario (Formspree) -->
         <form id="form-cb" class="contact-form" method="POST" action="https://formspree.io/f/xnpjneoo">
           <p style="display:none;"><label>No completar: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
-          <div class="form-group"><input type="text" name="nombre" placeholder="Tu nombre" required class="form-input"></div>
-          <div class="form-group"><input type="email" name="email" placeholder="Tu correo electrónico" required class="form-input"></div>
+          <div class="form-group"><input type="text" name="nombre" autocomplete="name" aria-label="Tu nombre" placeholder="Tu nombre" required class="form-input"></div>
+          <div class="form-group"><input type="email" name="email" autocomplete="email" aria-label="Tu correo electrónico" placeholder="Tu correo electrónico" required class="form-input"></div>
           <div class="form-group">
-            <select name="tipo_sitio" required class="form-input">
+            <select name="tipo_sitio" aria-label="¿Qué necesitás?" required class="form-input">
               <option value="" disabled selected>¿Qué necesitás?</option>
               <option>Sitio web para mi marca o negocio</option>
               <option>Landing page</option>
@@ -573,7 +570,7 @@
               <option>Otra consulta</option>
             </select>
           </div>
-          <div class="form-group"><textarea name="mensaje" placeholder="Contanos brevemente tu proyecto" rows="4" required class="form-input"></textarea></div>
+          <div class="form-group"><textarea name="mensaje" aria-label="Tu mensaje" placeholder="Contanos brevemente tu proyecto" rows="4" required class="form-input"></textarea></div>
           <button type="submit" class="btn-primary form-submit-btn">ENVIAR CONSULTA &rarr;</button>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
@@ -617,7 +614,7 @@
         </a>
 
         <!-- Email con texto -->
-        <a href="mailto: cbstudioweb02@gmail.com" class="social-link" aria-label="Enviar correo electrónico a CB Studio Web">
+        <a href="mailto:cbstudioweb02@gmail.com" class="social-link" aria-label="Enviar correo electrónico a CB Studio Web">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="14" rx="2"></rect>
             <path d="m4 7 8 6 8-6"></path>
