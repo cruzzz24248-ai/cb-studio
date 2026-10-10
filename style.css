@@ -1691,3 +1691,11 @@ select.form-input { appearance: none; background: transparent; cursor: pointer; 
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* TRABAJOS: varias demos en cuadrícula */
+.work-grid{display:grid;gap:28px}
+@media(min-width:1000px){
+  .work-grid{grid-template-columns:1fr 1fr;align-items:stretch}
+  .work-grid .work-card{grid-template-columns:1fr;align-content:start;gap:1.5rem}
+  .work-grid .work-info{padding:0.4rem 0.6rem 0.8rem}
+}
