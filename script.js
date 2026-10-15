@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const groups = [
       ['.pillar-item', 'reveal'], ['.solutions-header', 'reveal'], ['.solution-card', 'reveal'],
       ['.includes li', 'reveal'], ['.work .section-tag, .work .section-title, .work-intro', 'reveal'],
-      ['.work-card', 'reveal'], ['.work-more', 'reveal'], ['.process-step-item', 'reveal reveal-x'],
+      ['.work-card', 'reveal'], ['.work-more', 'reveal'], ['.process-step-item', 'reveal'],
       ['.faq .section-tag, .faq .section-title', 'reveal'], ['.faq-item', 'reveal'],
       ['.about-visual, .about-header, .about-body', 'reveal'], ['.cta-header, .cta-action, .cta-quote', 'reveal'],
       ['.contact-info > *', 'reveal'], ['.contact-form .form-group', 'reveal']
