@@ -231,17 +231,6 @@ img {
 /* ==========================================================================
    2. HERO SECTION
    ========================================================================== */
-@keyframes scrollPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.35;
-    transform: translateY(5px);
-  }
-}
-
 .hero {
   position: relative;
   padding-top: 8rem;
@@ -378,29 +367,6 @@ img {
 
 .hero-diagonal-card:hover .hero-img {
   transform: scale(1.03);
-}
-
-.hero-scroll-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  margin-top: 1.2rem;
-  animation: scrollPulse 2.2s infinite ease-in-out;
-}
-
-.scroll-line {
-  width: 1px;
-  height: 12px;
-  background-color: var(--accent-primary);
-}
-
-.scroll-text {
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--accent-primary);
-  text-transform: uppercase;
 }
 
 /* ==========================================================================
@@ -1550,11 +1516,8 @@ select.form-input { appearance: none; background: transparent; cursor: pointer; 
 
 .reveal-x.active { transform: none; }
 
-.work-frame { contain: layout paint; }
 
-.work-frame iframe { transition: opacity 0.4s ease; opacity: 0; }
 
-.work-frame iframe.is-loaded { opacity: 1; }
 
 body { overscroll-behavior-y: none; }
 
@@ -1577,3 +1540,10 @@ body { overscroll-behavior-y: none; }
 .btn-primary:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
 .includes li { background: #fff; }
 @media (max-width: 640px) { .trust { gap: 0.3rem 1rem; } .trust li { font-size: 0.74rem; } }
+
+/* Lista de confianza: bajo los botones en escritorio, bajo la imagen en celular */
+.trust--mobile { display: none; }
+@media (max-width: 850px) {
+  .trust--desktop { display: none; }
+  .trust--mobile { display: flex; margin-top: 1.8rem; }
+}
