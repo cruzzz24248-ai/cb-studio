@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#FBFBFA">
   <meta name="google-site-verification" content="BVPIzQXgVS3elPhXqvpd7E_iNlSM9htcZKl4obxSEDM" />
  
@@ -82,9 +82,18 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"¿Cuánto cuesta una web?","acceptedAnswer":{"@type":"Answer","text":"Depende del alcance: cantidad de secciones, galerías y funciones. Escribinos y te enviamos una propuesta a medida en menos de 24 horas."}},
+    {"@type":"Question","name":"¿Cuánto tarda?","acceptedAnswer":{"@type":"Answer","text":"Un sitio simple puede estar listo en pocos días; uno con varias páginas de proyecto, en un par de semanas. Te confirmamos el plazo antes de empezar."}},
+    {"@type":"Question","name":"¿Necesito comprar dominio y hosting?","acceptedAnswer":{"@type":"Answer","text":"Podemos publicar tu sitio en hosting gratuito de calidad. El dominio propio es un costo anual aparte, y te ayudamos a elegirlo y conectarlo."}},
+    {"@type":"Question","name":"¿Podré cambiar fotos y proyectos yo mismo?","acceptedAnswer":{"@type":"Answer","text":"Sí. Podemos dejar el sitio con un panel simple para que actualices proyectos sin tocar código."}}
+  ]}
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
 
   <!-- ==========================================
        HEADER
@@ -128,7 +137,7 @@
   <!-- ==========================================
        MAIN
   =========================================== -->
-  <main>
+  <main id="main">
 
     <!-- ========================================
          HERO
@@ -157,6 +166,10 @@
             <a href="#trabajos" class="btn-secondary">Ver trabajos &rarr;
             </a>
           </div>
+
+          <ul class="trust" aria-label="Por qué elegirnos">
+            <li>Respuesta en 24 h</li><li>Sin intermediarios</li><li>Publicación incluida</li>
+          </ul>
 
           <div class="hero-location">
             <span>Córdoba · Argentina</span>
@@ -350,7 +363,7 @@
           <a href="https://estudioaranda.vercel.app" class="work-preview" target="_blank" rel="noopener noreferrer" aria-label="Abrir la demo de Estudio Aranda">
             <div class="work-browser" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="work-frame">
-              <iframe src="https://estudioaranda.vercel.app" title="Vista previa de la demo Estudio Aranda" loading="lazy" tabindex="-1" scrolling="no"></iframe>
+              <iframe data-src="https://estudioaranda.vercel.app" title="Vista previa de la demo Estudio Aranda" loading="lazy" tabindex="-1" scrolling="no"></iframe>
             </div>
           </a>
           <div class="work-info">
@@ -367,7 +380,7 @@
           <a href="https://amapolapasteleria.vercel.app" class="work-preview" target="_blank" rel="noopener noreferrer" aria-label="Abrir la demo de Amapola Pastelería">
             <div class="work-browser" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="work-frame">
-              <iframe src="https://amapolapasteleria.vercel.app" title="Vista previa de la demo Amapola Pastelería" loading="lazy" tabindex="-1" scrolling="no"></iframe>
+              <iframe data-src="https://amapolapasteleria.vercel.app" title="Vista previa de la demo Amapola Pastelería" loading="lazy" tabindex="-1" scrolling="no"></iframe>
             </div>
           </a>
           <div class="work-info">
@@ -467,6 +480,7 @@
           <details class="faq-item"><summary>¿Necesito comprar dominio y hosting?</summary><p>Podemos publicar tu sitio en hosting gratuito de calidad. El dominio propio (tumarca.com) es un costo anual aparte, y te ayudamos a elegirlo y conectarlo.</p></details>
           <details class="faq-item"><summary>¿Podré cambiar fotos y proyectos yo mismo?</summary><p>Sí. Podemos dejar el sitio con un panel simple para que actualices proyectos sin tocar código.</p></details>
         </div>
+        <p class="faq-cta">¿Te quedó otra duda? <a href="https://wa.me/5493525632567?text=Hola%20CB%20Studio%20Web,%20quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp &rarr;</a></p>
       </div>
     </section>
 

@@ -1,21 +1,19 @@
-/* ==========================================================================
-   CB STUDIO WEB — SCRIPT ÚNICO
-   Header y menú · Hero 3D · Reveals · Scroll suave · Formulario · Vista previa
-   · Progreso de lectura · Menú activo · Reveals extra
-   ========================================================================== */
+/* CB STUDIO WEB — SCRIPT ÚNICO (versión estable) */
 document.addEventListener('DOMContentLoaded', () => {
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasIO = 'IntersectionObserver' in window;
 
   // ---------- HEADER Y MENÚ MÓVIL ----------
-  const header = $('#header');
-  const burger = $('#hamburger-btn');
-  const nav = $('#nav-menu');
-
-  const updateHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 30);
+  const header = $('#header'), burger = $('#hamburger-btn'), nav = $('#nav-menu');
+  let scrolled = false;
+  const updateHeader = () => {
+    const s = scrollY > 30;
+    if (s !== scrolled && header) { scrolled = s; header.classList.toggle('scrolled', s); }
+  };
   updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
+  addEventListener('scroll', updateHeader, { passive: true });
 
   if (header && burger && nav) {
     const setMenu = (open) => {
@@ -24,81 +22,104 @@ document.addEventListener('DOMContentLoaded', () => {
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
     };
-    burger.addEventListener('click', (e) => { e.stopPropagation(); setMenu(!nav.classList.contains('active')); });
-    $$('.nav-link, .mobile-only-btn').forEach(l => l.addEventListener('click', () => setMenu(false)));
-    document.addEventListener('click', (e) => { if (!header.contains(e.target) && nav.classList.contains('active')) setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('active')) { setMenu(false); burger.focus(); } });
-    window.addEventListener('resize', () => { if (window.innerWidth > 900 && nav.classList.contains('active')) setMenu(false); });
+    const isOpen = () => nav.classList.contains('active');
+    burger.addEventListener('click', (e) => { e.stopPropagation(); setMenu(!isOpen()); });
+    $$('.nav-link, .mobile-only-btn').forEach((l) => l.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('click', (e) => { if (isOpen() && !header.contains(e.target)) setMenu(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { setMenu(false); burger.focus(); } });
+    addEventListener('resize', () => { if (innerWidth > 900 && isOpen()) setMenu(false); });
   }
 
-  // ---------- HERO: EFECTO 3D TILT ----------
-  const heroCard = $('.hero-diagonal-card');
-  if (heroCard && window.innerWidth > 850 && !reduceMotion) {
-    let frame = null;
-    heroCard.addEventListener('mousemove', (e) => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        const r = heroCard.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        heroCard.style.transform = `perspective(1000px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg)`;
-        frame = null;
+  // ---------- HERO: TILT 3D (solo con mouse) ----------
+  const card = $('.hero-diagonal-card');
+  if (card && !reduce && matchMedia('(hover: hover) and (min-width: 851px)').matches) {
+    let raf = 0;
+    card.addEventListener('mousemove', (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(1000px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg)`;
+        raf = 0;
       });
     });
-    heroCard.addEventListener('mouseleave', () => { heroCard.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)'; });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   }
 
-  // ---------- REVEALS (aparición al hacer scroll) ----------
-  const reveal = (selector, { translate = 'translateY(36px)', duration = '1s', delay = 140, threshold = 0.15 } = {}) => {
-    const els = $$(selector);
-    if (!els.length || reduceMotion || !('IntersectionObserver' in window)) return;
-    const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
-    els.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = translate;
-      el.style.transition = `opacity ${duration} ${ease}, transform ${duration} ${ease}`;
-    });
-    const obs = new IntersectionObserver((entries) => {
-      let n = 0; // escalonado solo entre los elementos que aparecen juntos
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        setTimeout(() => {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0) translateX(0)';
-          // Devuelve el control a la hoja de estilos para que funcione el hover
-          setTimeout(() => { el.style.transform = ''; el.style.transition = ''; }, 1300);
-        }, n++ * delay);
-        obs.unobserve(el);
+  // ---------- REVEALS (un solo sistema, basado en clases) ----------
+  if (hasIO && !reduce) {
+    const groups = [
+      ['.pillar-item', 'reveal'], ['.solutions-header', 'reveal'], ['.solution-card', 'reveal'],
+      ['.includes li', 'reveal'], ['.work .section-tag, .work .section-title, .work-intro', 'reveal'],
+      ['.work-card', 'reveal'], ['.work-more', 'reveal'], ['.process-step-item', 'reveal reveal-x'],
+      ['.faq .section-tag, .faq .section-title', 'reveal'], ['.faq-item', 'reveal'],
+      ['.about-visual, .about-header, .about-body', 'reveal'], ['.cta-header, .cta-action, .cta-quote', 'reveal'],
+      ['.contact-info > *', 'reveal'], ['.contact-form .form-group', 'reveal']
+    ];
+    const io = new IntersectionObserver((entries) => {
+      entries.filter((e) => e.isIntersecting).forEach((e, n) => {
+        const el = e.target;
+        io.unobserve(el);
+        el.style.transitionDelay = Math.min(n, 4) * 110 + 'ms';
+        el.classList.add('active');
+        // Libera el elemento para que el hover vuelva a funcionar
+        setTimeout(() => { el.classList.remove('reveal', 'reveal-x', 'active'); el.style.transitionDelay = ''; }, 1400 + n * 110);
       });
-    }, { threshold });
-    els.forEach(el => obs.observe(el));
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    const seen = new Set();
+    groups.forEach(([sel, cls]) => $$(sel).forEach((el, i) => {
+      if (seen.has(el)) return;
+      seen.add(el);
+      el.classList.add(...cls.split(' '));
+      io.observe(el);
+    }));
+  }
+
+  // ---------- BARRA DE PROGRESO ----------
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+  let ticking = false;
+  const setBar = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
+    ticking = false;
   };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(setBar); } }, { passive: true });
+  setBar();
 
-  reveal('.pillar-item', { translate: 'translateY(28px)', delay: 150, threshold: 0.2 });
-  reveal('.solution-card');
-  reveal('.work-card', { threshold: 0.1 });
-  reveal('.process-step-item', { translate: 'translateX(28px)', duration: '0.9s', delay: 150, threshold: 0.2 });
-  reveal('.about-visual, .about-header, .about-body', { delay: 150, threshold: 0.2 });
-  reveal('.cta-header, .cta-action, .cta-quote', { delay: 150 });
+  // ---------- MENÚ ACTIVO ----------
+  if (hasIO) {
+    const links = $$('.nav-link');
+    const spy = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((l) => l.classList.toggle('is-current', l.getAttribute('href') === '#' + e.target.id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    $$('main section[id], footer[id]').forEach((s) => spy.observe(s));
+  }
 
-  // ---------- SCROLL SUAVE CON COMPENSACIÓN DEL HEADER ----------
-  $$('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
-    const id = a.getAttribute('href');
-    if (!id) return;
-    if (id === '#') { e.preventDefault(); window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
-    const target = $(id);
-    if (!target) return;
-    e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.pageYOffset - (header ? header.offsetHeight : 0);
-    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
-  }));
+  // ---------- VISTA PREVIA DE TRABAJOS ----------
+  const fit = () => $$('.work-frame').forEach((box) => {
+    const f = box.querySelector('iframe');
+    if (f && box.clientWidth) f.style.transform = `scale(${box.clientWidth / 1280})`;
+  });
+  fit();
+  if ('ResizeObserver' in window) { const ro = new ResizeObserver(fit); $$('.work-frame').forEach((b) => ro.observe(b)); }
+  else addEventListener('resize', fit);
+
+  // Las demos se cargan recién cuando están por verse (evita tirones al scrollear)
+  const frames = $$('.work-frame iframe[data-src]');
+  const load = (f) => { f.src = f.dataset.src; f.removeAttribute('data-src'); f.addEventListener('load', () => f.classList.add('is-loaded'), { once: true }); };
+  if (hasIO) {
+    const fio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { fio.unobserve(e.target); load(e.target); } }), { rootMargin: '300px 0px' });
+    frames.forEach((f) => fio.observe(f));
+  } else frames.forEach(load);
 
   // ---------- FORMULARIO (Formspree) ----------
   const form = $('#form-cb');
   if (form) {
-    const btn = form.querySelector('button[type="submit"]');
-    const status = form.querySelector('.form-status');
+    const btn = form.querySelector('button[type="submit"]'), status = form.querySelector('.form-status');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const label = btn.innerHTML;
@@ -117,63 +138,4 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = false; btn.innerHTML = label;
     });
   }
-
-  // ---------- VISTA PREVIA DE TRABAJOS (escala el iframe al ancho disponible) ----------
-  const fitPreviews = () => $$('.work-frame').forEach(box => {
-    const f = box.querySelector('iframe');
-    if (f && box.clientWidth) f.style.transform = `scale(${box.clientWidth / 1280})`;
-  });
-  fitPreviews();
-  window.addEventListener('load', fitPreviews);
-  window.addEventListener('resize', fitPreviews);
 });
-
-/* ==========================================================================
-   MEJORAS: progreso de lectura · menú activo · reveals extra
-   ========================================================================== */
-(() => {
-  const $$ = (s) => Array.from(document.querySelectorAll(s));
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Barra de progreso de lectura
-  const bar = document.createElement('div');
-  bar.className = 'scroll-progress';
-  bar.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(bar);
-  let tick = false;
-  const setBar = () => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    bar.style.transform = `scaleX(${max > 0 ? Math.min(scrollY / max, 1) : 0})`;
-    tick = false;
-  };
-  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(setBar); } }, { passive: true });
-  setBar();
-
-  if (!('IntersectionObserver' in window)) return;
-
-  // Menú: marca la sección que se está viendo
-  const links = $$('.nav-link');
-  const spy = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return;
-    links.forEach((l) => l.classList.toggle('is-current', l.getAttribute('href') === '#' + e.target.id));
-  }), { rootMargin: '-45% 0px -50% 0px' });
-  // Observa todas las secciones: las que no tienen link (hero, enfoque) apagan el resaltado
-  $$('main section[id], footer[id]').forEach((s) => spy.observe(s));
-
-  // Reveals extra (usa .reveal / .active del CSS)
-  if (reduce) return;
-  const groups = ['.solutions-header', '.includes li', '.work .section-tag, .work .section-title, .work-intro', '.work-more',
-    '.faq .section-tag, .faq .section-title', '.faq-item', '.contact-info > *', '.contact-form .form-group'];
-  const io = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    el.classList.add('active');
-    io.unobserve(el);
-    setTimeout(() => { el.style.transitionDelay = ''; }, 1800);
-  }), { threshold: 0.15 });
-  groups.forEach((sel) => $$(sel).forEach((el, i) => {
-    el.classList.add('reveal');
-    el.style.transitionDelay = Math.min(i, 4) * 90 + 'ms';
-    io.observe(el);
-  }));
-})();
