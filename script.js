@@ -1,5 +1,6 @@
 /* CB STUDIO WEB — SCRIPT ÚNICO (versión estable) */
 document.addEventListener('DOMContentLoaded', () => {
+  const WHATSAPP_NUMBER = '5493525632567'; // formato internacional, sin + ni espacios
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.toggle('active', open);
       burger.classList.toggle('active', open);
       burger.setAttribute('aria-expanded', String(open));
-      burger.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+      burger.setAttribute('aria-label', document.documentElement.lang === 'en' ? (open ? 'Close navigation menu' : 'Open navigation menu') : (open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'));
     };
     const isOpen = () => nav.classList.contains('active');
     burger.addEventListener('click', (e) => { e.stopPropagation(); setMenu(!isOpen()); });
@@ -28,22 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => { if (isOpen() && !header.contains(e.target)) setMenu(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { setMenu(false); burger.focus(); } });
     addEventListener('resize', () => { if (innerWidth > 900 && isOpen()) setMenu(false); });
-  }
-
-  // ---------- HERO: TILT 3D (solo con mouse) ----------
-  const card = $('.hero-diagonal-card');
-  if (card && !reduce && matchMedia('(hover: hover) and (min-width: 851px)').matches) {
-    let raf = 0;
-    card.addEventListener('mousemove', (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(1000px) rotateY(${x * 3}deg) rotateX(${-y * 3}deg)`;
-        raf = 0;
-      });
-    });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   }
 
   // ---------- REVEALS (un solo sistema, basado en clases) ----------
@@ -102,7 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- VISTA PREVIA DE TRABAJOS ----------
   const fit = () => $$('.work-frame').forEach((box) => {
     const f = box.querySelector('iframe');
-    if (f && box.clientWidth) f.style.transform = `scale(${box.clientWidth / 1280})`;
+    if (!f || !box.clientWidth) return;
+    const viewportWidth = box.classList.contains('work-frame--mobile') ? 390 : 1440;
+    f.style.transform = `scale(${box.clientWidth / viewportWidth})`;
   });
   fit();
   if ('ResizeObserver' in window) { const ro = new ResizeObserver(fit); $$('.work-frame').forEach((b) => ro.observe(b)); }
@@ -116,26 +103,45 @@ document.addEventListener('DOMContentLoaded', () => {
     frames.forEach((f) => fio.observe(f));
   } else frames.forEach(load);
 
-  // ---------- FORMULARIO (Formspree) ----------
+  // ---------- VOLVER ARRIBA ----------
+  const toTop = document.createElement('button');
+  toTop.type = 'button';
+  toTop.className = 'back-to-top';
+  toTop.setAttribute('aria-label', document.documentElement.lang === 'en' ? 'Back to top' : 'Volver arriba');
+  toTop.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>';
+  document.body.appendChild(toTop);
+  const updateTop = () => toTop.classList.toggle('is-visible', scrollY > 900);
+  addEventListener('scroll', updateTop, { passive: true });
+  updateTop();
+  toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+
+  // ---------- CONTACTO DIRECTO POR WHATSAPP ----------
   const form = $('#form-cb');
   if (form) {
-    const btn = form.querySelector('button[type="submit"]'), status = form.querySelector('.form-status');
-    form.addEventListener('submit', async (e) => {
+    const status = form.querySelector('.form-status');
+    const isEnglish = document.documentElement.lang === 'en';
+    form.addEventListener('input', () => { if (status) { status.className = 'form-status'; status.textContent = ''; } });
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const label = btn.innerHTML;
-      btn.disabled = true; btn.textContent = 'ENVIANDO…';
-      status.className = 'form-status'; status.textContent = '';
-      try {
-        const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-        if (!r.ok) throw new Error();
-        form.reset();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const name = String(data.get('nombre') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const service = String(data.get('tipo_sitio') || '').trim();
+      const message = String(data.get('mensaje') || '').trim();
+      const lines = isEnglish
+        ? ['Hello CB Studio Web! I’d like to discuss a project.', '', `Name: ${name}`, ...(email ? [`Email: ${email}`] : []), `What I need: ${service}`, '', 'Project details:', message]
+        : ['¡Hola, CB Studio Web! Quiero consultar por un proyecto.', '', `Nombre: ${name}`, ...(email ? [`Correo: ${email}`] : []), `Qué necesito: ${service}`, '', 'Detalles del proyecto:', message];
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=` + encodeURIComponent(lines.join('\n'));
+      const opened = window.open(url, '_blank', 'noopener,noreferrer');
+      if (status) {
         status.className = 'form-status is-ok';
-        status.textContent = '¡Gracias! Recibimos tu consulta y te respondemos en menos de 24 horas.';
-      } catch (_) {
-        status.className = 'form-status is-error';
-        status.innerHTML = 'No pudimos enviar el mensaje. Escribinos por <a href="https://wa.me/5493525632567" target="_blank" rel="noopener noreferrer">WhatsApp</a>.';
+        status.textContent = isEnglish
+          ? 'WhatsApp will open with your message ready. Review it and tap Send.'
+          : 'Se abrirá WhatsApp con el mensaje preparado. Revisalo y tocá Enviar.';
       }
-      btn.disabled = false; btn.innerHTML = label;
+      // Si el navegador bloquea la ventana emergente, abrimos WhatsApp en la misma pestaña
+      if (!opened) window.location.href = url;
     });
   }
 });
