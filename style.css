@@ -3308,3 +3308,215 @@ textarea:focus-visible {
 .back-to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
 .back-to-top:hover { background: var(--accent-primary); color: var(--ivory); }
 @media (prefers-reduced-motion: reduce) { .back-to-top { transition: none; } }
+
+/* ==========================================================================
+   Hero: botón secundario alineado debajo del primario (escritorio / tablet)
+   El celular conserva su propio layout (ver @media max-width: 520px).
+   ========================================================================== */
+@media (min-width: 521px) {
+  .hero--new .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+  }
+
+  .hero--new .hero-actions .btn-secondary {
+    margin: 0;
+    align-self: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Interacciones de botones: hover, presionado (tap) y foco
+   - El hover solo se aplica en dispositivos con mouse (evita hover "pegado" en celular).
+   - El efecto de presionado funciona en mouse y en pantallas táctiles.
+   ========================================================================== */
+.btn-primary,
+.btn-header,
+.btn-secondary,
+.solutions-all-link,
+.work-link,
+.faq-cta a,
+.hamburger-btn,
+.whatsapp-float,
+.back-to-top,
+.social-link,
+.footer-link,
+.language-switch a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Botones sólidos */
+.btn-primary,
+.btn-header {
+  transition:
+    transform .28s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .28s ease,
+    background-color .25s ease,
+    color .25s ease;
+}
+
+.btn-primary span[aria-hidden="true"],
+.btn-secondary span[aria-hidden="true"] {
+  display: inline-block;
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Enlaces subrayados (secundario, "Cotizar un proyecto", "Quiero algo así", FAQ) */
+.btn-secondary,
+.solutions-all-link,
+.work-link,
+.faq-cta a {
+  display: inline-block;
+  transition:
+    transform .28s cubic-bezier(.16, 1, .3, 1),
+    color .25s ease,
+    border-color .25s ease,
+    letter-spacing .28s ease,
+    opacity .15s ease;
+}
+
+.btn-secondary { display: block; }
+
+/* Otros botones */
+.hamburger-btn {
+  transition: transform .2s cubic-bezier(.16, 1, .3, 1);
+}
+
+.whatsapp-float {
+  transition:
+    transform .3s cubic-bezier(.175, .885, .32, 1.275),
+    background-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.footer-link {
+  display: inline-block;
+  transition: color .25s ease, transform .25s cubic-bezier(.16, 1, .3, 1);
+}
+
+.social-link {
+  transition: color .25s ease, transform .25s cubic-bezier(.16, 1, .3, 1);
+}
+
+.back-to-top {
+  transition:
+    opacity .3s ease,
+    visibility .3s ease,
+    transform .25s cubic-bezier(.16, 1, .3, 1),
+    background-color .25s ease,
+    color .25s ease,
+    box-shadow .25s ease;
+}
+
+.language-switch a {
+  transition: color .2s ease, transform .2s ease, opacity .15s ease;
+}
+
+/* ---- Hover (solo mouse / trackpad) ---- */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:not(:disabled):hover,
+  .btn-header:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(41, 39, 31, .2);
+  }
+
+  .btn-primary:not(:disabled):hover span[aria-hidden="true"] {
+    transform: translate(2px, -2px);
+  }
+
+  .btn-secondary:hover span[aria-hidden="true"] {
+    transform: translateY(3px);
+  }
+
+  .btn-secondary:hover,
+  .solutions-all-link:hover,
+  .work-link:hover,
+  .faq-cta a:hover {
+    transform: translateY(-2px);
+  }
+
+  .solutions-all-link:hover,
+  .work-link:hover {
+    letter-spacing: 1.8px;
+  }
+
+  .footer-link:hover {
+    transform: translateX(3px);
+  }
+
+  .social-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .back-to-top.is-visible:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(41, 39, 31, .18);
+  }
+
+  .language-switch a:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* ---- Presionado (mouse y táctil) ---- */
+.btn-primary:not(:disabled):active,
+.btn-header:active,
+.cta-btn:active {
+  transform: translateY(0) scale(.97);
+  box-shadow: 0 3px 8px rgba(41, 39, 31, .18);
+  transition-duration: .1s;
+}
+
+.btn-secondary:active,
+.solutions-all-link:active,
+.work-link:active,
+.faq-cta a:active {
+  transform: translateY(0) scale(.97);
+  opacity: .7;
+  transition-duration: .1s;
+}
+
+.hamburger-btn:active {
+  transform: scale(.88);
+}
+
+.whatsapp-float:active {
+  transform: scale(.92);
+  transition-duration: .1s;
+}
+
+.back-to-top.is-visible:active {
+  transform: scale(.9);
+  transition-duration: .1s;
+}
+
+.footer-link:active,
+.social-link:active,
+.language-switch a:active {
+  opacity: .65;
+  transition-duration: .1s;
+}
+
+/* Sin movimiento si la persona lo pidió en su dispositivo */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover,
+  .btn-header:hover,
+  .btn-secondary:hover,
+  .solutions-all-link:hover,
+  .work-link:hover,
+  .faq-cta a:hover,
+  .footer-link:hover,
+  .social-link:hover,
+  .back-to-top.is-visible:hover,
+  .btn-primary:active,
+  .btn-header:active,
+  .cta-btn:active,
+  .btn-secondary:active,
+  .whatsapp-float:active,
+  .back-to-top.is-visible:active,
+  .hamburger-btn:active {
+    transform: none !important;
+  }
+}
