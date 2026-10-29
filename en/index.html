@@ -15,6 +15,7 @@
 
   <link rel="alternate" hreflang="es" href="https://cbstudioweb.com/">
   <link rel="alternate" hreflang="en" href="https://cbstudioweb.com/en/">
+  <link rel="alternate" hreflang="pt-BR" href="https://cbstudioweb.com/br/">
   <link rel="alternate" hreflang="x-default" href="https://cbstudioweb.com/">
 
   <!-- Complete favicon setup -->
@@ -36,6 +37,7 @@
   <meta property="og:site_name" content="CB Studio Web">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="es_AR">
+  <meta property="og:locale:alternate" content="pt_BR">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
@@ -49,7 +51,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="../style.css?v=20261030">
+  <link rel="stylesheet" href="../style.css?v=20261031">
 
   <!-- Enhanced Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -145,7 +147,7 @@
   }
   </script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","name":"CB Studio Web","alternateName":["CB Studio"],"url":"https://cbstudioweb.com/","inLanguage":["es-AR","en"],"publisher":{"@id":"https://cbstudioweb.com/#organization"}}
+  {"@context":"https://schema.org","@type":"WebSite","name":"CB Studio Web","alternateName":["CB Studio"],"url":"https://cbstudioweb.com/","inLanguage":["es-AR","en","pt-BR"],"publisher":{"@id":"https://cbstudioweb.com/#organization"}}
   </script>
 </head>
 
@@ -179,7 +181,14 @@
       </nav>
 
       <div class="language-switch" aria-label="Language">
-        <a href="../" lang="es" hreflang="es">ES</a><span aria-hidden="true">/</span><a href="./" lang="en" hreflang="en" aria-current="page">EN</a>
+        <details class="lang-dd">
+          <summary aria-label="Language: EN"><span>EN</span><svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5"></path></svg></summary>
+          <ul class="lang-menu">
+          <li><a href="../" lang="es" hreflang="es"><b>ES</b><span>Español</span></a></li>
+          <li><a href="./" lang="en" hreflang="en" aria-current="page"><b>EN</b><span>English</span></a></li>
+          <li><a href="../br/" lang="pt-BR" hreflang="pt-BR"><b>BR</b><span>Português</span></a></li>
+          </ul>
+        </details>
       </div>
 
       <a href="#formulario" class="btn-header desktop-only-btn">
@@ -228,7 +237,7 @@
             <a href="#soluciones" class="btn-secondary">Explore what we do <span aria-hidden="true">↓</span></a>
           </div>
 
-          <ul class="trust trust--hero" aria-label="Nuestra forma de trabajar">
+          <ul class="trust trust--hero" aria-label="How we work">
             <li>Direct communication</li><li>Custom design</li><li>Results-focused</li>
           </ul>
           <div class="hero-location"><span>Based in Córdoba · Working worldwide</span></div>
@@ -761,7 +770,7 @@
   </a>
 
   <!-- JavaScript -->
-  <script src="../script.js?v=20261030"></script>
+  <script src="../script.js?v=20261032"></script>
   
 </body>
 </html>

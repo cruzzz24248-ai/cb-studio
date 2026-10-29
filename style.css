@@ -3520,3 +3520,91 @@ textarea:focus-visible {
     transform: none !important;
   }
 }
+
+
+/* ==========================================================================
+   Selector de idioma desplegable (muestra solo el idioma activo)
+   ========================================================================== */
+@media (min-width: 901px) {
+  .language-switch { position: relative; }
+}
+
+.lang-dd { position: relative; }
+
+.lang-dd > summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .45rem .2rem;
+  cursor: pointer;
+  color: var(--accent-primary);
+  font-weight: 600;
+  letter-spacing: .08em;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-dd > summary::-webkit-details-marker { display: none; }
+.lang-dd > summary::marker { content: ""; }
+
+.lang-dd > summary svg {
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+
+.lang-dd[open] > summary svg { transform: rotate(180deg); }
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  z-index: 1003;
+  min-width: 9.75rem;
+  list-style: none;
+  padding: .35rem;
+  background: var(--paper-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 16px 36px rgba(41, 39, 31, .14);
+  animation: langMenuIn .18s ease both;
+}
+
+.lang-menu a {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .6rem .7rem;
+  border-radius: 5px;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lang-menu a b {
+  min-width: 1.5rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--accent-primary);
+}
+
+.lang-menu a:hover,
+.lang-menu a[aria-current="page"] {
+  background: var(--paper-soft);
+  color: var(--text-primary);
+  text-decoration: none;
+  transform: none;
+}
+
+@keyframes langMenuIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-menu { animation: none; }
+  .lang-dd > summary svg { transition: none; }
+}
