@@ -1293,6 +1293,10 @@ select.form-input {
   border-radius: 50px;
 }
 
+.work-card--live .work-preview::after { content: "Abrir sitio \2192"; }
+html[lang="en"] .work-card--live .work-preview::after { content: "Open site \2192"; }
+html[lang="pt-BR"] .work-card--live .work-preview::after { content: "Abrir site \2192"; }
+
 .work-more {
   margin-top: 1.5rem;
   font-size: 0.8rem;
