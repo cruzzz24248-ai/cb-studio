@@ -51,7 +51,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="../style.css?v=20261033">
+  <link rel="stylesheet" href="../style.css?v=20261036">
 
   <!-- Enhanced Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -140,7 +140,7 @@
         "name": "Can I update photos and projects myself?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Depending on the project, we can set up a simple editing workflow so you can update content without touching code."
+          "text": "Yes, with an optional editing panel. It’s an extra on top of the project that lets you update photos, prices and products without touching code. Because it takes additional work, it’s quoted separately and the choice is yours."
         }
       }
     ]
@@ -263,7 +263,11 @@
     </section>
 
 
-    <!-- ========================================
+        <div class="vibe-band" aria-hidden="true">
+      <div class="vibe-track"><ul><li>Custom design</li><li>Catalogue + WhatsApp</li><li>Optional editing panel</li><li>Mobile-friendly</li><li>SEO foundations</li><li>Launch and deployment</li></ul><ul><li>Custom design</li><li>Catalogue + WhatsApp</li><li>Optional editing panel</li><li>Mobile-friendly</li><li>SEO foundations</li><li>Launch and deployment</li></ul></div>
+    </div>
+
+<!-- ========================================
          APPROACH
     ========================================= -->
     <section class="approach" id="enfoque">
@@ -423,6 +427,7 @@
         <p class="work-intro">Every project starts from scratch. Explore live projects and imagine what your own website could look like.</p>
         <div class="work-grid">
         <article class="work-card work-card--live">
+          <span class="work-badge"><i aria-hidden="true"></i>Real client · Live</span>
           <a href="https://amour-boutique.cruzzz24248.workers.dev" class="work-preview" target="_blank" rel="noopener noreferrer" aria-label="Open the Amour Boutique website">
             <div class="work-showcase" aria-label="Desktop and mobile views of Amour Boutique">
               <div class="device-preview device-preview--desktop">
@@ -446,7 +451,8 @@
           <div class="work-info">
             <span class="work-kind">Live project · Shop and catalogue</span>
             <h3 class="work-name">Amour Boutique</h3>
-            <p class="work-text">An online shop for lingerie, pyjamas and accessories, with a category-based catalogue, a quick view for every product and complete WhatsApp orders. It includes an admin panel so the business can update products, photos and stock on its own, straight from a phone.</p>
+            <p class="work-text">An online shop for lingerie, pyjamas and accessories, with a category-based catalogue, a quick view for every product and complete WhatsApp orders. It adds the optional editing panel, so the business can update products, photos and stock on its own, straight from a phone.</p>
+            <dl class="work-facts"><div><dt>Built</dt><dd>Category catalogue, search and a size guide</dd></div><div><dt>Includes</dt><dd>Complete WhatsApp ordering</dd></div><div><dt>Updated</dt><dd>From the panel, on a phone</dd></div></dl>
             <div class="work-actions">
               <a href="https://amour-boutique.cruzzz24248.workers.dev" class="btn-primary" target="_blank" rel="noopener noreferrer">View live site &rarr;</a>
               <a href="#formulario" class="work-link">I want something like this &rarr;</a>
@@ -489,7 +495,39 @@
       </div>
     </section>
 
-    <!-- ========================================
+        <!-- PANEL DE EDICIÓN -->
+    <section class="panel" id="panel">
+      <div class="container panel-grid">
+        <div class="panel-copy">
+          <span class="section-tag">Editing panel</span> <span class="panel-opt">Optional extra</span>
+          <h2 class="section-title">Edit your website<br>from your phone.</h2>
+          <p class="panel-lead">It’s an extra for anyone who wants to run their website on their own: a simple panel to change prices, photos or stock whenever you like. Tap Publish and it’s online in a couple of minutes, with no code to write. Because it takes additional work, it’s quoted separately and the choice is yours. Without it, your website is just as complete and ready to use.</p>
+          <ul class="panel-points"><li><b>Prices and texts</b> instantly, without waiting on anyone.</li><li><b>Sold-out colours and sizes</b> with a single tap.</li><li><b>New photos</b> straight from your phone’s gallery.</li></ul>
+          <dl class="panel-stats"><div><dt><span data-count="24">24</span> h</dt><dd>reply to your enquiry</dd></div><div><dt>1–2 min</dt><dd>from publishing to live</dd></div><div><dt>0</dt><dd>lines of code for you to touch</dd></div></dl>
+          <a href="#formulario" class="btn-primary">Ask about the panel <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="panel-stage">
+          <div class="pn-phone" role="img" aria-label="Illustration of the editing panel on a phone: a colour is marked as sold out, a price is changed and Publish is tapped">
+            <div class="pn-screen" aria-hidden="true">
+              <div class="pn-top"><b>Shop</b><span>Products</span></div>
+              <div class="pn-card">
+                <div class="pn-name">Lace set</div>
+                <div class="pn-row"><label>Price</label>
+                  <div class="pn-price"><span class="pn-p1">$ 12.900</span><span class="pn-p2">$ 13.900</span><i class="pn-caret"></i><b class="pn-tap pn-tap-b"></b></div></div>
+                <div class="pn-row"><label>Colours</label>
+                  <div class="pn-sw"><i style="--c:#C9A9A0"></i><i style="--c:#2B2523"></i><i class="pn-sold" style="--c:#A33B4B"><b class="pn-tap pn-tap-a"></b></i><i style="--c:#D9D3C8"></i></div></div>
+                <div class="pn-check"><span class="pn-box"></span><span>Sold out</span></div>
+              </div>
+              <div class="pn-toast">Live on your site in 1–2 minutes</div>
+              <div class="pn-pub"><span class="pn-pub-1">Publish</span><span class="pn-pub-2">Published ✓</span><b class="pn-tap pn-tap-c"></b></div>
+            </div>
+          </div>
+          <p class="panel-caption">Panel illustration</p>
+        </div>
+      </div>
+    </section>
+
+<!-- ========================================
          PROCESS
     ========================================= -->
     <section class="process" id="proceso">
@@ -569,7 +607,7 @@
           <details class="faq-item"><summary>How much does a website cost?</summary><p>It depends on the scope, including pages, galleries and functionality. Get in touch and we’ll prepare a tailored proposal.</p></details>
           <details class="faq-item"><summary>How long does it take?</summary><p>A simple website may take a few days, while a larger site can take a few weeks. We’ll confirm the timeline before work begins.</p></details>
           <details class="faq-item"><summary>Do I need a domain and hosting?</summary><p>We can deploy your website on a quality hosting platform. A custom domain is usually a separate annual cost, and we can help you choose and connect it.</p></details>
-          <details class="faq-item"><summary>Can I update photos and projects myself?</summary><p>Depending on the project, we can set up a simple editing workflow so you can update content without touching code.</p></details>
+          <details class="faq-item"><summary>Can I update photos and projects myself?</summary><p>Yes, with an optional editing panel. It’s an extra on top of the project that lets you update photos, prices and products without touching code. Because it takes additional work, it’s quoted separately and the choice is yours.</p></details>
         </div>
         <p class="faq-cta">Still have a question? <a href="https://wa.me/5493525632567?text=Hello%20CB%20Studio%20Web%2C%20I%27d%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer">Message us on WhatsApp &rarr;</a></p>
       </div>
@@ -770,7 +808,7 @@
   </a>
 
   <!-- JavaScript -->
-  <script src="../script.js?v=20261032"></script>
+  <script src="../script.js?v=20261033"></script>
   
 </body>
 </html>

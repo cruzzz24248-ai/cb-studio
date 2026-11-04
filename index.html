@@ -51,7 +51,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Estilos CSS Principales -->
-  <link rel="stylesheet" href="style.css?v=20261033">
+  <link rel="stylesheet" href="style.css?v=20261036">
 
   <!-- Schema.org JSON-LD Enriquecido -->
   <script type="application/ld+json">
@@ -140,7 +140,7 @@
         "name": "¿Podré cambiar fotos y proyectos yo mismo?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sí. Podemos dejar el sitio con un panel simple para que actualices proyectos sin tocar código."
+          "text": "Sí, con un panel de edición opcional. Es un plus que se suma al proyecto: te permite actualizar fotos, precios y productos sin tocar código. Como implica trabajo adicional, se presupuesta aparte y vos decidís si lo querés."
         }
       }
     ]
@@ -263,7 +263,11 @@
     </section>
 
 
-    <!-- ========================================
+        <div class="vibe-band" aria-hidden="true">
+      <div class="vibe-track"><ul><li>Diseño a medida</li><li>Catálogo + WhatsApp</li><li>Panel de edición opcional</li><li>Adaptado a celular</li><li>SEO base para Google</li><li>Publicación online</li></ul><ul><li>Diseño a medida</li><li>Catálogo + WhatsApp</li><li>Panel de edición opcional</li><li>Adaptado a celular</li><li>SEO base para Google</li><li>Publicación online</li></ul></div>
+    </div>
+
+<!-- ========================================
          APPROACH / ENFOQUE
     ========================================= -->
     <section class="approach" id="enfoque">
@@ -423,6 +427,7 @@
         <p class="work-intro">Cada proyecto se diseña desde cero. Explorá proyectos en vivo y mirá cómo puede verse el tuyo.</p>
         <div class="work-grid">
         <article class="work-card work-card--live">
+          <span class="work-badge"><i aria-hidden="true"></i>Cliente real · En vivo</span>
           <a href="https://amour-boutique.cruzzz24248.workers.dev" class="work-preview" target="_blank" rel="noopener noreferrer" aria-label="Abrir el sitio de Amour Boutique">
             <div class="work-showcase" aria-label="Vistas de escritorio y celular de Amour Boutique">
               <div class="device-preview device-preview--desktop">
@@ -446,7 +451,8 @@
           <div class="work-info">
             <span class="work-kind">Proyecto real · Tienda y catálogo</span>
             <h3 class="work-name">Amour Boutique</h3>
-            <p class="work-text">Una tienda online de ropa interior, pijamas y accesorios, con catálogo por categorías, vista rápida de cada producto y pedido completo por WhatsApp. Incluye un panel para que el negocio actualice productos, fotos y stock solo, desde el celular.</p>
+            <p class="work-text">Una tienda online de ropa interior, pijamas y accesorios, con catálogo por categorías, vista rápida de cada producto y pedido completo por WhatsApp. Suma el panel de edición opcional, para que el negocio actualice productos, fotos y stock solo, desde el celular.</p>
+            <dl class="work-facts"><div><dt>Hecho</dt><dd>Catálogo por categorías, buscador y guía de talles</dd></div><div><dt>Incluye</dt><dd>Pedido completo por WhatsApp</dd></div><div><dt>Se actualiza</dt><dd>Desde el panel, en el celular</dd></div></dl>
             <div class="work-actions">
               <a href="https://amour-boutique.cruzzz24248.workers.dev" class="btn-primary" target="_blank" rel="noopener noreferrer">Ver sitio en vivo &rarr;</a>
               <a href="#formulario" class="work-link">Quiero algo así &rarr;</a>
@@ -489,7 +495,39 @@
       </div>
     </section>
 
-    <!-- ========================================
+        <!-- PANEL DE EDICIÓN -->
+    <section class="panel" id="panel">
+      <div class="container panel-grid">
+        <div class="panel-copy">
+          <span class="section-tag">Panel de edición</span> <span class="panel-opt">Plus opcional</span>
+          <h2 class="section-title">Editás tu web<br>desde el celular.</h2>
+          <p class="panel-lead">Es un plus para quien quiere manejar su web por cuenta propia: un panel simple para cambiar precios, fotos o stock cuando quieras. Tocás Publicar y en un par de minutos se ve online, sin escribir una línea de código. Como suma trabajo extra, se presupuesta aparte y vos decidís si lo querés. Sin el panel, tu web queda igual de completa y lista para usar.</p>
+          <ul class="panel-points"><li><b>Precios y textos</b> al instante, sin depender de nadie.</li><li><b>Colores y talles agotados</b> con un solo toque.</li><li><b>Fotos nuevas</b> directo desde la galería del celular.</li></ul>
+          <dl class="panel-stats"><div><dt><span data-count="24">24</span> h</dt><dd>respuesta a tu consulta</dd></div><div><dt>1–2 min</dt><dd>de publicar a verlo online</dd></div><div><dt>0</dt><dd>líneas de código que tenés que tocar</dd></div></dl>
+          <a href="#formulario" class="btn-primary">Consultar por el panel <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="panel-stage">
+          <div class="pn-phone" role="img" aria-label="Ilustración del panel de edición en un celular: se marca un color como agotado, se cambia un precio y se toca Publicar">
+            <div class="pn-screen" aria-hidden="true">
+              <div class="pn-top"><b>Tienda</b><span>Productos</span></div>
+              <div class="pn-card">
+                <div class="pn-name">Conjunto de encaje</div>
+                <div class="pn-row"><label>Precio</label>
+                  <div class="pn-price"><span class="pn-p1">$ 12.900</span><span class="pn-p2">$ 13.900</span><i class="pn-caret"></i><b class="pn-tap pn-tap-b"></b></div></div>
+                <div class="pn-row"><label>Colores</label>
+                  <div class="pn-sw"><i style="--c:#C9A9A0"></i><i style="--c:#2B2523"></i><i class="pn-sold" style="--c:#A33B4B"><b class="pn-tap pn-tap-a"></b></i><i style="--c:#D9D3C8"></i></div></div>
+                <div class="pn-check"><span class="pn-box"></span><span>Agotado</span></div>
+              </div>
+              <div class="pn-toast">Se ve en tu web en 1–2 minutos</div>
+              <div class="pn-pub"><span class="pn-pub-1">Publicar</span><span class="pn-pub-2">Publicado ✓</span><b class="pn-tap pn-tap-c"></b></div>
+            </div>
+          </div>
+          <p class="panel-caption">Ilustración del panel</p>
+        </div>
+      </div>
+    </section>
+
+<!-- ========================================
          PROCESS
     ========================================= -->
     <section class="process" id="proceso">
@@ -568,7 +606,7 @@
           <details class="faq-item"><summary>¿Cuánto cuesta una web?</summary><p>Depende del alcance: cantidad de secciones, galerías y funciones. Escribinos y te enviamos una propuesta a medida en menos de 24 horas.</p></details>
           <details class="faq-item"><summary>¿Cuánto tarda?</summary><p>Un sitio simple puede estar listo en pocos días; uno con varias páginas de proyecto, en un par de semanas. Te confirmamos el plazo antes de empezar.</p></details>
           <details class="faq-item"><summary>¿Necesito comprar dominio y hosting?</summary><p>Podemos publicar tu sitio en hosting gratuito de calidad. El dominio propio (tumarca.com) es un costo anual aparte, y te ayudamos a elegirlo y conectarlo.</p></details>
-          <details class="faq-item"><summary>¿Podré cambiar fotos y proyectos yo mismo?</summary><p>Sí. Podemos dejar el sitio con un panel simple para que actualices proyectos sin tocar código.</p></details>
+          <details class="faq-item"><summary>¿Podré cambiar fotos y proyectos yo mismo?</summary><p>Sí, con un panel de edición opcional. Es un plus que se suma al proyecto: te permite actualizar fotos, precios y productos sin tocar código. Como implica trabajo adicional, se presupuesta aparte y vos decidís si lo querés.</p></details>
         </div>
         <p class="faq-cta">¿Te quedó otra duda? <a href="https://wa.me/5493525632567?text=Hola%20CB%20Studio%20Web,%20quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp &rarr;</a></p>
       </div>
@@ -769,7 +807,7 @@
   </a>
 
   <!-- JavaScript -->
-  <script src="script.js?v=20261032"></script>
+  <script src="script.js?v=20261033"></script>
   
 </body>
 </html>
