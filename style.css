@@ -3861,3 +3861,263 @@ textarea:focus-visible {
   .btn-primary { translate: none; }
   .work-card .device-preview--desktop, .work-card .device-preview--mobile { transform: none !important; }
 }
+
+/* ==========================================================================
+   CB STUDIO WEB — CAPA DE MOVIMIENTO Y NAVBAR (v6)
+   Va al final del archivo a propósito: tiene que ganar sobre las reglas anteriores.
+   ========================================================================== */
+
+:root {
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-ink: cubic-bezier(.65, 0, .2, 1);
+  interpolate-size: allow-keywords;
+}
+
+::selection { background: var(--accent-detail); color: var(--ivory); }
+
+/* Textura de papel muy sutil: le da tacto al marfil, en sintonía con el dibujo a tinta */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .18 0 0 0 0 .12 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- HERO: una sola secuencia orquestada al cargar ---------- */
+
+/* 1) El título sube línea por línea desde una máscara */
+.hero--new .hero-title .ln,
+.mx-h .ln {
+  display: block;
+  overflow: hidden;
+  padding-bottom: .14em;
+  margin-bottom: -.14em;
+}
+.hero--new .hero-title .ln > span,
+.mx-h .ln > span { display: block; }
+
+.hero--new .hero-title .ln > span {
+  animation: lnUp 1.15s var(--ease-out) both;
+  animation-delay: calc(.2s + var(--i, 0) * .13s);
+}
+@keyframes lnUp { from { transform: translateY(108%); } to { transform: none; } }
+
+/* el título ya no necesita su fade genérico */
+.hero--new .hero-content > .hero-title { animation: none; }
+
+/* 2) El resto del texto entra después, en orden de lectura */
+.hero--new .hero-content > * { animation-duration: .9s; }
+.hero--new .hero-content > :nth-child(1) { animation-delay: .05s; }
+.hero--new .hero-content > :nth-child(2) { animation-delay: .15s; }
+.hero--new .hero-content > :nth-child(4) { animation-delay: .95s; }
+.hero--new .hero-content > :nth-child(5) { animation-delay: 1.1s; }
+.hero--new .hero-content > :nth-child(6) { animation-delay: 1.25s; }
+.hero--new .hero-content > :nth-child(7) { animation-delay: 1.4s; }
+
+/* 3) El ojo se abre desde el iris, como tinta que se expande sobre el papel */
+.hero-eye-visual.hero-visual { animation: none; }
+.hero-eye-image { animation: eyeOpen 2.1s var(--ease-ink) .45s backwards; }
+@keyframes eyeOpen {
+  from { clip-path: circle(0% at 65% 47%); scale: 1.09; }
+  to   { clip-path: circle(112% at 65% 47%); scale: 1; }
+}
+.hero-eye-caption { animation: fadeUp .9s var(--ease-out) 1.9s backwards; }
+.hero-eye-caption__line { transform-origin: left; animation: growX 1s var(--ease-out) 2s backwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes growX { from { transform: scaleX(0); } to { transform: none; } }
+
+/* anillo decorativo: respira muy lento */
+.hero--new::before { animation: ringBreath 14s ease-in-out infinite alternate; }
+@keyframes ringBreath { to { transform: scale(1.05) translate3d(-8px, 6px, 0); } }
+
+/* ---------- SCROLL REVEAL (solo si el navegador lo permite) ---------- */
+
+/* Títulos de sección: suben línea por línea */
+.mx .mx-h .ln > span { transform: translateY(108%); }
+.mx .mx-h.is-in .ln > span {
+  transform: none;
+  transition: transform 1.15s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 110ms + var(--d, 0ms));
+}
+
+/* Bloques: cada tipo entra distinto, según lo que es */
+.mx .rv {
+  opacity: 0;
+  transition: opacity .9s var(--ease-out), transform 1.1s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.mx .rv[data-rv="up"]    { transform: translateY(30px); }
+.mx .rv[data-rv="soft"]  { transform: translateY(14px); }
+.mx .rv[data-rv="left"]  { transform: translateX(-30px); }
+.mx .rv[data-rv="scale"] { transform: translateY(36px) scale(.97); }
+.mx .rv.is-in { opacity: 1; transform: none; }
+
+/* Imágenes: placeholder vivo del color del papel y aparición suave cuando ya cargaron */
+.mx .img-box {
+  background: linear-gradient(100deg, #D9CBB8 30%, #E9DFCF 50%, #D9CBB8 70%) 0 0 / 220% 100%;
+  animation: shimmer 1.7s linear infinite;
+}
+.mx .img-box.is-ready { animation: none; }
+.mx .img-box > img {
+  opacity: 0;
+  filter: blur(10px);
+  scale: 1.07;
+  transition: opacity .9s ease, filter 1.1s var(--ease-out), scale 1.5s var(--ease-out), transform .7s cubic-bezier(.16, 1, .3, 1);
+}
+.mx .img-box.is-ready > img { opacity: 1; filter: none; scale: 1; }
+
+/* Iconos de los pilares: se dibujan a trazo */
+.mx .pillar-icon svg :is(path, rect, circle) {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.5s var(--ease-ink) .25s;
+}
+.mx .pillar-icon svg.is-drawn :is(path, rect, circle) { stroke-dashoffset: 0; }
+
+/* Línea del proceso: se traza cuando llegás a la sección */
+.mx .process-steps::before {
+  animation: none;
+  transform: scaleY(0);
+  transition: transform 1.8s var(--ease-ink);
+}
+.mx .process-steps.is-in::before { transform: scaleY(1); }
+
+/* ---------- HEADER: se corre al bajar, vuelve al subir ---------- */
+.header {
+  transition: transform .5s var(--ease-out), background-color .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.header.is-hidden { transform: translateY(-100%); }
+
+/* ---------- TARJETAS: foco de luz que sigue al cursor ---------- */
+.solution-card { position: relative; }
+.solution-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s ease;
+  background: radial-gradient(380px circle at var(--sx, 50%) var(--sy2, 50%), rgba(168, 124, 79, .16), transparent 62%);
+}
+.solution-card:hover::after { opacity: 1; }
+
+/* ---------- TRABAJOS: las vistas previas cargan con un esqueleto vivo ---------- */
+.work-frame {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(100deg, #E6DCCD 30%, #F4EEE4 50%, #E6DCCD 70%) 0 0 / 220% 100%;
+  animation: shimmer 1.7s linear infinite;
+}
+.work-frame:has(iframe.is-loaded) { animation: none; background: #F5F0E7; }
+.work-frame iframe { opacity: 0; transition: opacity .9s ease; }
+.work-frame iframe.is-loaded { opacity: 1; }
+@keyframes shimmer { to { background-position: -220% 0; } }
+
+/* ---------- FAQ: abre y cierra con suavidad ---------- */
+.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size .45s var(--ease-out), content-visibility .45s allow-discrete;
+}
+.faq-item[open]::details-content { block-size: auto; }
+
+/* ---------- FORMULARIO: foco más claro ---------- */
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(168, 124, 79, .2);
+  transition: box-shadow .25s ease, border-color .25s ease;
+}
+
+/* ---------- Movimiento reducido: todo queda quieto y visible ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero--new .hero-title .ln > span,
+  .hero-eye-image,
+  .hero-eye-caption,
+  .hero-eye-caption__line,
+  .hero--new::before { animation: none; }
+  .work-frame { animation: none; }
+  .faq-item::details-content { transition: none; }
+}
+
+/* ==========================================================================
+   NAVBAR — nada se parte en dos filas ni se encima, en ES / EN / BR
+   - Todo el contenido del header queda en una sola línea.
+   - Entre 901 y 1120 px el menú pasa a hamburguesa (antes recién a 900 px
+     y no alcanzaba el lugar, sobre todo en portugués).
+   - En pantallas grandes: logo a la izquierda, links centrados y
+     idioma + botón juntos a la derecha, con espacios proporcionales.
+   ========================================================================== */
+.brand-logo,
+.brand-name,
+.nav-link,
+.btn-header,
+.language-switch,
+.lang-dd > summary { white-space: nowrap; }
+.brand-logo,
+.language-switch,
+.btn-header,
+.hamburger-btn { flex-shrink: 0; }
+
+@media (min-width: 1121px) {
+  .nav-container { gap: clamp(1rem, 2vw, 2.4rem); }
+  .nav-menu { flex: 1 1 auto; display: flex; justify-content: center; min-width: 0; }
+  .nav-links { gap: clamp(1.1rem, 2vw, 2.2rem); }
+}
+@media (min-width: 1121px) and (max-width: 1320px) {
+  .nav-link { letter-spacing: .09em; }
+  .btn-header { padding-inline: .95rem; letter-spacing: .06em; }
+}
+
+/* Menú hamburguesa también entre 901 y 1120 px */
+@media (min-width: 901px) and (max-width: 1120px) {
+  .desktop-only-btn { display: none; }
+  .hamburger-btn { display: flex; }
+  .language-switch {
+    position: absolute;
+    right: 3.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1002;
+    font-size: .7rem;
+  }
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-main);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .05);
+    padding: 2rem 1.5rem 2.5rem;
+    transform: translateY(-20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .nav-menu.active { transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-links { flex-direction: column; gap: 1.4rem; align-items: flex-start; }
+  .nav-link { font-size: .85rem; letter-spacing: 2px; }
+  .mobile-only-btn { display: flex; width: 100%; padding: .8rem 1.5rem; margin-top: .5rem; }
+}
+
+/* ---------- Botón flotante de WhatsApp: aparece después del hero ---------- */
+.mx .whatsapp-float {
+  opacity: 0;
+  scale: .7;
+  pointer-events: none;
+  transition: transform .3s cubic-bezier(.175, .885, .32, 1.275), background-color .25s ease,
+              box-shadow .25s ease, opacity .5s ease, scale .5s var(--ease-out);
+}
+.mx.wa-on .whatsapp-float { opacity: 1; scale: 1; pointer-events: auto; }
+
+/* ---------- Foco de teclado visible y coherente ---------- */
+:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; border-radius: 2px; }
+.cta :focus-visible { outline-color: var(--ivory); }

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $$('.nav-link, .mobile-only-btn').forEach((l) => l.addEventListener('click', () => setMenu(false)));
     document.addEventListener('click', (e) => { if (isOpen() && !header.contains(e.target)) setMenu(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { setMenu(false); burger.focus(); } });
-    addEventListener('resize', () => { if (innerWidth > 900 && isOpen()) setMenu(false); });
+    addEventListener('resize', () => { if (innerWidth > 1120 && isOpen()) setMenu(false); });
   }
 
   // ---------- SELECTOR DE IDIOMA ----------
@@ -55,34 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (burger) burger.addEventListener('click', () => { langDd.open = false; });
   }
 
-  // ---------- REVEALS (un solo sistema, basado en clases) ----------
-  if (hasIO && !reduce) {
-    const groups = [
-      ['.pillar-item', 'reveal'], ['.solutions-header', 'reveal'], ['.solution-card', 'reveal'],
-      ['.includes li', 'reveal'], ['.work .section-tag, .work .section-title, .work-intro', 'reveal'],
-      ['.work-card', 'reveal'], ['.work-more', 'reveal'], ['.process-step-item', 'reveal'],
-      ['.faq .section-tag, .faq .section-title', 'reveal'], ['.faq-item', 'reveal'],
-      ['.about-visual, .about-header, .about-body', 'reveal'], ['.cta-header, .cta-action, .cta-quote', 'reveal'],
-      ['.contact-info > *', 'reveal'], ['.contact-form .form-group', 'reveal']
-    ];
-    const io = new IntersectionObserver((entries) => {
-      entries.filter((e) => e.isIntersecting).forEach((e, n) => {
-        const el = e.target;
-        io.unobserve(el);
-        el.style.transitionDelay = Math.min(n, 4) * 110 + 'ms';
-        el.classList.add('active');
-        // Libera el elemento para que el hover vuelva a funcionar
-        setTimeout(() => { el.classList.remove('reveal', 'reveal-x', 'active'); el.style.transitionDelay = ''; }, 1400 + n * 110);
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    const seen = new Set();
-    groups.forEach(([sel, cls]) => $$(sel).forEach((el, i) => {
-      if (seen.has(el)) return;
-      seen.add(el);
-      el.classList.add(...cls.split(' '));
-      io.observe(el);
-    }));
-  }
+  // (Los reveals, el parallax y los efectos de cursor viven en el bloque MOTION, al final de este archivo)
 
   // ---------- BARRA DE PROGRESO ----------
   const bar = document.createElement('div');
@@ -164,3 +137,231 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* ==========================================================================
+   MOTION — reveals, parallax, cursor, header y navbar
+   ========================================================================== */
+/* CB STUDIO WEB — CAPA DE MOVIMIENTO
+   Reemplaza el sistema de reveal anterior y recupera los efectos que
+   el CSS ya esperaba (parallax del ojo, botones magnéticos, tilt de trabajos). */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasIO = 'IntersectionObserver' in window;
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const root = document.documentElement;
+
+  /* ---------- 1) SCROLL REVEAL ---------- */
+  const TITLES = '.approach-title, .section-title, .process-title, .about-title, .cta-title, .contact-title';
+
+  // [selector, tipo de entrada]
+  const BLOCKS = [
+    ['.section-tag, .work-intro, .approach-description, .about-description, .contact-description, .panel-lead, .faq-cta', 'soft'],
+    ['.pillar-item', 'up'],
+    ['.solutions-header', 'soft'],
+    ['.solution-card', 'up'],
+    ['.includes li', 'soft'],
+    ['.work-card', 'scale'],
+    ['.work-more', 'soft'],
+    ['.panel-points li', 'left'],
+    ['.panel-stats > div', 'up'],
+    ['.panel-stage', 'scale'],
+    ['.process-step-item', 'left'],
+    ['.faq-item', 'soft'],
+    ['.about-location', 'soft'],
+    ['.cta-action, .cta-quote', 'up'],
+    ['.form-group, .form-submit-btn, .form-note', 'soft']
+  ];
+
+  function splitTitle(el) {
+    const parts = el.innerHTML.split(/<br\s*\/?>/i).map((s) => s.trim()).filter(Boolean);
+    el.innerHTML = parts.map((p, i) => `<span class="ln"><span style="--i:${i}">${p} </span></span>`).join('');
+    el.classList.add('mx-h');
+  }
+
+  if (hasIO && !reduce) {
+    root.classList.add('mx');
+
+    $$(TITLES).forEach(splitTitle);
+
+    const seen = new Set();
+    const targets = [];
+    $$(TITLES).forEach((el) => { seen.add(el); targets.push({ el, kind: 'title' }); });
+    BLOCKS.forEach(([sel, type]) => $$(sel).forEach((el) => {
+      if (seen.has(el)) return;
+      seen.add(el);
+      el.classList.add('rv');
+      el.dataset.rv = type;
+      targets.push({ el, kind: 'block' });
+    }));
+    $$('.process-steps').forEach((el) => { targets.push({ el, kind: 'line' }); });
+    $$('.pillar-icon svg').forEach((svg) => {
+      $$('path, rect, circle', svg).forEach((p) => p.setAttribute('pathLength', '1'));
+    });
+
+    const kindOf = new Map(targets.map((t) => [t.el, t.kind]));
+
+    const io = new IntersectionObserver((entries) => {
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left)
+        .forEach((e, n) => {
+          const el = e.target;
+          const kind = kindOf.get(el);
+          io.unobserve(el);
+          const delay = Math.min(n, 5) * 90;
+          el.style.setProperty('--d', delay + 'ms');
+          el.classList.add('is-in');
+
+          if (kind === 'block') {
+            const svg = $('.pillar-icon svg', el);
+            if (svg) svg.classList.add('is-drawn');
+            // al terminar, se libera el elemento para que el hover vuelva a ser inmediato
+            setTimeout(() => { el.classList.remove('rv', 'is-in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); }, 1500 + delay);
+          }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    targets.forEach((t) => io.observe(t.el));
+  }
+
+  /* ---------- 2c) IMÁGENES: placeholder vivo + aparición cuando ya cargaron ---------- */
+  if (root.classList.contains('mx')) {
+    $$('.process-img, .about-img').forEach((img) => {
+      const box = img.parentElement;
+      box.classList.add('img-box');
+      let loaded = false, seen = false;
+      const show = () => { if (loaded && seen) box.classList.add('is-ready'); };
+      const onLoad = () => { loaded = true; show(); };
+      if (img.complete && img.naturalWidth) onLoad();
+      else { img.addEventListener('load', onLoad, { once: true }); img.addEventListener('error', onLoad, { once: true }); }
+      const vio = new IntersectionObserver((es) => {
+        if (es.some((e) => e.isIntersecting)) { seen = true; vio.disconnect(); show(); }
+      }, { rootMargin: '0px 0px -4% 0px' });
+      vio.observe(box);
+      // red de seguridad: nunca queda oculta
+      setTimeout(() => { loaded = seen = true; show(); }, 9000);
+      // empieza a descargarla apenas termina la carga crítica, sin esperar al scroll
+      const preload = () => { img.loading = 'eager'; img.fetchPriority = 'low'; };
+      if (document.readyState === 'complete') preload(); else addEventListener('load', preload, { once: true });
+    });
+  }
+
+  /* ---------- 2) CONTADOR DEL PANEL ---------- */
+  const counters = $$('[data-count]');
+  if (counters.length && hasIO && !reduce) {
+    const cio = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      cio.unobserve(e.target);
+      const el = e.target;
+      const end = Number(el.dataset.count) || 0;
+      const t0 = performance.now();
+      const dur = 1400;
+      const tick = (t) => {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      el.textContent = '0';
+      requestAnimationFrame(tick);
+    }), { threshold: 0.6 });
+    counters.forEach((c) => cio.observe(c));
+  }
+
+  /* ---------- 2b) WHATSAPP FLOTANTE: aparece al salir del hero ---------- */
+  if (root.classList.contains('mx')) {
+    const wa = () => root.classList.toggle('wa-on', scrollY > 520);
+    wa();
+    addEventListener('scroll', wa, { passive: true });
+  }
+
+  /* ---------- 3) HEADER: se oculta al bajar, vuelve al subir ---------- */
+  const header = $('#header');
+  const nav = $('#nav-menu');
+  if (header && !reduce) {
+    let lastY = scrollY, tick = false;
+    const onScroll = () => {
+      const y = scrollY;
+      const menuOpen = nav && nav.classList.contains('active');
+      if (menuOpen || y < 420) header.classList.remove('is-hidden');
+      else if (y > lastY + 6) header.classList.add('is-hidden');
+      else if (y < lastY - 6) header.classList.remove('is-hidden');
+      lastY = y;
+      tick = false;
+    };
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    // si alguien navega con teclado, el header tiene que verse
+    header.addEventListener('focusin', () => header.classList.remove('is-hidden'));
+  }
+
+  /* ---------- 4) HERO: el ojo responde al mouse y al scroll ---------- */
+  const hero = $('#hero');
+  const eye = $('.hero-eye-image');
+  if (hero && eye && !reduce) {
+    if (finePointer) {
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        eye.style.setProperty('--ex', (((e.clientX - r.left) / r.width) - 0.5) * 2);
+        eye.style.setProperty('--ey', (((e.clientY - r.top) / r.height) - 0.5) * 2);
+      });
+      hero.addEventListener('pointerleave', () => { eye.style.setProperty('--ex', 0); eye.style.setProperty('--ey', 0); });
+    }
+    let t = false;
+    const par = () => {
+      const y = scrollY;
+      if (y < innerHeight * 1.2) eye.style.setProperty('--sy', (-y * 0.06).toFixed(1) + 'px');
+      t = false;
+    };
+    addEventListener('scroll', () => { if (!t) { t = true; requestAnimationFrame(par); } }, { passive: true });
+  }
+
+  /* ---------- 5) FRANJA: acelera según la velocidad del scroll ---------- */
+  const track = $('.vibe-track');
+  if (track && track.getAnimations && !reduce) {
+    const anim = track.getAnimations()[0];
+    if (anim) {
+      let lastY = scrollY, rate = 1;
+      const loop = () => {
+        const v = Math.abs(scrollY - lastY);
+        lastY = scrollY;
+        const target = 1 + Math.min(v * 0.35, 5);
+        rate += (target - rate) * 0.08;
+        anim.playbackRate = rate;
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
+    }
+  }
+
+  /* ---------- 6) CURSOR: botones magnéticos, tilt de trabajos, luz en tarjetas ---------- */
+  if (finePointer && !reduce) {
+    $$('.btn-primary').forEach((b) => {
+      b.addEventListener('pointermove', (e) => {
+        const r = b.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) * 0.18;
+        const dy = (e.clientY - (r.top + r.height / 2)) * 0.28;
+        b.style.setProperty('--mx', Math.max(-7, Math.min(7, dx)).toFixed(1) + 'px');
+        b.style.setProperty('--my', Math.max(-5, Math.min(5, dy)).toFixed(1) + 'px');
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+    });
+
+    $$('.work-card').forEach((c) => {
+      c.addEventListener('pointermove', (e) => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--nx', (((e.clientX - r.left) / r.width) - 0.5) * 2);
+        c.style.setProperty('--ny', (((e.clientY - r.top) / r.height) - 0.5) * 2);
+      });
+      c.addEventListener('pointerleave', () => { c.style.setProperty('--nx', 0); c.style.setProperty('--ny', 0); });
+    });
+
+    $$('.solution-card').forEach((c) => {
+      c.addEventListener('pointermove', (e) => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--sx', (e.clientX - r.left) + 'px');
+        c.style.setProperty('--sy2', (e.clientY - r.top) + 'px');
+      });
+    });
+  }
+})();
