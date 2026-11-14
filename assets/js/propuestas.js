@@ -22,6 +22,17 @@
     $('#inp-empresa').value = emp;
   }
 
+  /* La grúa baja el contenedor cuando la figura entra en pantalla
+     (en celular queda debajo del texto y la animación pasaba sin que se viera) */
+  const fig = document.querySelector('.ph-art');
+  if (fig && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    fig.classList.add('espera');
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { fig.classList.add('vista'); io.disconnect(); }
+    }, { threshold: 0.5 });
+    io.observe(fig);
+  }
+
   /* Una ventana del contenedor por cada grupo de módulos */
   const NS = 'http://www.w3.org/2000/svg';
   GRUPOS.forEach((_, i) => {

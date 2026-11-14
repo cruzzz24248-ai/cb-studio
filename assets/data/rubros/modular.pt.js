@@ -34,7 +34,7 @@ window.CB_RUBRO = (() => {
     ['Alcance', [
       ['Mapa de obras entregues', 'Projetos filtráveis por tipo e estado.', 2],
       ['Área para empresas', 'Acampamentos, escritórios e empreendimentos, com pedido por volume.', 1],
-      ['WhatsApp e Instagram integrados', 'Botão de contato em cada modelo e suas últimas obras exibidas no site.', 1],
+      ['Instagram integrado', 'Suas últimas obras do Instagram exibidas no site.', 1],
       ['Formulário que qualifica o cliente', 'Terreno, orçamento e prazo: os contatos chegam prontos para orçar.', 2],
       ['Guia do terreno e normas', 'O que preparar, o que licenciar e um checklist para baixar.', 1]]],
     ['Confiança', [
@@ -44,7 +44,6 @@ window.CB_RUBRO = (() => {
     ['Base técnica', [
       ['Vários idiomas', 'Espanhol, inglês e português, com SEO para cada um.', 2],
       ['SEO local', 'Para aparecer quando buscam construção modular na sua região.', 1],
-      ['Velocidade e hospedagem incluídas', 'Carrega rápido no celular, certificado de segurança e backup.', 1],
       ['Estatísticas de contatos', 'Saber quais modelos mais são vistos e de onde vêm os clientes.', 1]]]
   ];
   const NIVELES = ['', 'Básico', 'Intermediário', 'Avançado'];

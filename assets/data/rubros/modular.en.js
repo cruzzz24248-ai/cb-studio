@@ -34,7 +34,7 @@ window.CB_RUBRO = (() => {
     ['Reach', [
       ['Map of delivered projects', 'Projects you can filter by type and region.', 2],
       ['Business section', 'Camps, offices and developments, with bulk orders.', 1],
-      ['WhatsApp and Instagram built in', 'An inquiry button on every model and your latest projects shown on the site.', 1],
+      ['Instagram built in', 'Your latest Instagram projects shown on the site.', 1],
       ['Lead-qualifying form', 'Land, budget and timeline: inquiries arrive ready to quote.', 2],
       ['Land and regulations guide', 'What to prepare, what to permit, plus a downloadable checklist.', 1]]],
     ['Trust', [
@@ -44,7 +44,6 @@ window.CB_RUBRO = (() => {
     ['Technical foundation', [
       ['Multiple languages', 'Spanish, English and Portuguese, with SEO for each.', 2],
       ['Local SEO', 'To show up when people search for modular construction in your area.', 1],
-      ['Speed and hosting included', 'Fast on mobile, security certificate and backups.', 1],
       ['Inquiry analytics', 'See which models get the most views and where clients come from.', 1]]]
   ];
   const NIVELES = ['', 'Basic', 'Intermediate', 'Advanced'];

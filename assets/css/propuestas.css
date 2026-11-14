@@ -335,3 +335,14 @@
 .pr .card .go { font-weight: 600; color: var(--marron); text-decoration: underline; }
 .pr .card.soft { background: transparent; border-style: dashed; }
 .pr .ph--solo { grid-template-columns: 1fr; padding-bottom: 36px; }
+
+/* Sección «Lo que incluye todo proyecto» (antes del selector) */
+.pr .incl { padding: clamp(36px,6vw,72px) var(--pad); max-width: 1320px; margin: auto; border-top: 1px solid var(--borde); }
+.pr .incl h3 { margin: 22px 0 10px; color: var(--marron); font: 600 .72rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.pr .incl .lead { margin-bottom: 6px; }
+.pr .incl .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+.pr .incl .chips li { padding: 8px 14px; border: 1px solid var(--borde); border-radius: 999px; background: #FBF9F4; font-size: .92rem; }
+.pr .incl .chips li::before { content: "\2713\00a0"; color: var(--marron); font-weight: 700; }
+.pr .incl .more { display: inline-block; margin-top: 18px; color: var(--marron); font-weight: 600; text-decoration: underline; }
+/* La grúa espera a que la figura entre en pantalla (el JS agrega .espera y luego .vista) */
+.pr .ph-art.espera:not(.vista) .drop, .pr .ph-art.espera:not(.vista) .cables { animation-play-state: paused; }
