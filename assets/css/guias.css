@@ -1,0 +1,42 @@
+/* ==========================================================================
+   CB STUDIO — guias.css
+   Solo para /guias/ (artículos y portada de guías). Va DESPUÉS de main.css.
+   ========================================================================== */
+.guide-page { padding-top: calc(var(--header-h) + clamp(2rem, 5vw, 4rem)); padding-bottom: var(--section-y); }
+.guide { max-width: 46rem; margin-inline: auto; }
+.guide--index { max-width: 60rem; }
+.guide-crumb { margin-bottom: 1.4rem; color: var(--ink-3); font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.guide-crumb a { text-decoration: underline; text-underline-offset: 3px; }
+.guide-title { margin-bottom: 1rem; font: 400 clamp(2.1rem, 5vw, 3.4rem)/1.08 var(--serif); letter-spacing: -.035em; text-wrap: balance; }
+.guide-meta { margin-bottom: 1.6rem; color: var(--ink-3); font-size: .8rem; }
+.guide-lead { margin-bottom: 2rem; color: var(--ink-2); font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.75; }
+.guide-toc { margin-bottom: 3rem; padding: 1.3rem 1.5rem; background: var(--paper-soft); border-left: 2px solid var(--bronze); }
+.guide-toc p { margin-bottom: .6rem; color: var(--walnut); font-size: .66rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.guide-toc ol { display: grid; gap: .35rem; padding-left: 1.2rem; list-style: decimal; color: var(--ink-3); font-size: .9rem; }
+.guide-toc a:hover { color: var(--walnut); text-decoration: underline; }
+.guide-section { margin-bottom: 2.6rem; }
+.guide-section h2, .guide-cta h2, .guide-related h2 { margin-bottom: 1rem; font: 400 clamp(1.5rem, 2.8vw, 2rem)/1.2 var(--serif); letter-spacing: -.025em; text-wrap: balance; }
+.guide-section p, .guide-section li { color: var(--ink-2); line-height: 1.8; }
+.guide-section p + p, .guide-section p + ul, .guide-section ul + p, .guide-section ul + .guide-note { margin-top: 1rem; }
+.guide-section ul { display: grid; gap: .6rem; padding-left: 0; }
+.guide-section li { position: relative; padding-left: 1.3rem; }
+.guide-section li::before { content: ""; position: absolute; left: 0; top: .72em; width: 5px; height: 5px; background: var(--bronze); transform: rotate(45deg); }
+.guide-section strong { color: var(--espresso); font-weight: 600; }
+.guide-section a, .guide-lead a { color: var(--walnut); text-decoration: underline; text-underline-offset: 3px; }
+.guide-section code { padding: .1em .4em; border-radius: 3px; background: var(--paper-soft); font-size: .88em; overflow-wrap: anywhere; }
+.guide-note { padding: 1rem 1.2rem; background: var(--paper-card); border: 1px solid var(--sand); border-left: 2px solid var(--bronze); color: var(--ink-2); font-size: .94rem; }
+.guide .faq-list { border-top-color: var(--sand); }
+.guide-cta { margin: 3.5rem 0; padding: clamp(1.6rem, 4vw, 2.4rem); background: var(--espresso); color: var(--ivory); border-radius: 4px; }
+.guide-cta p { max-width: 32rem; color: var(--on-dark); }
+.guide-cta__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 1.8rem; margin-top: 1.4rem; }
+.guide-cta .work-link { color: #F0D7B8; }
+.guide-related ul { display: grid; gap: .8rem; }
+.guide-related a, .guide-card { display: grid; gap: .4rem; padding: 1.2rem 1.4rem; background: var(--paper-card); border: 1px solid var(--sand); transition: border-color .25s ease, transform .3s var(--ease-out); }
+.guide-related a b, .guide-card span { color: var(--walnut); font-size: .76rem; font-weight: 600; }
+.guide-related a span { font: 400 1.15rem/1.3 var(--serif); }
+.guide-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; margin-top: 2.5rem; }
+.guide-card { align-content: start; gap: .7rem; padding: 1.6rem; }
+.guide-card h2 { font: 400 1.4rem/1.2 var(--serif); letter-spacing: -.02em; }
+.guide-card p { color: var(--ink-2); font-size: .94rem; line-height: 1.65; }
+@media (hover: hover) and (pointer: fine) { .guide-related a:hover, .guide-card:hover { border-color: var(--walnut); transform: translateY(-3px); } }
+@media (max-width: 760px) { .guide-cards { grid-template-columns: 1fr; } }

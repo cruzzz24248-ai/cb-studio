@@ -1,11 +1,14 @@
 {
-  "name": "CB Studio Web",
+  "name": "CB Studio",
   "short_name": "CB Studio",
-  "description": "Diseño y desarrollo web a medida · Web design and development · Design e desenvolvimento de sites",
+  "lang": "es",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
+  "description": "Diseño y desarrollo web a medida · Web design and development · Design e desenvolvimento de sites",
   "display": "browser",
-  "background_color": "#F5F0E7",
-  "theme_color": "#F5F0E7",
+  "background_color": "#F5F1E9",
+  "theme_color": "#F5F1E9",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -15,7 +18,8 @@
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
