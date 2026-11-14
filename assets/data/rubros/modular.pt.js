@@ -15,7 +15,7 @@ window.CB_RUBRO = (() => {
     min: 'Marque pelo menos um módulo para poder enviar.',
     try: 'Testar demo',
     note: 'É uma amostra com valores de exemplo. No seu site usaríamos seus modelos e preços.',
-    msg: (nom, emp, lista, nota) => `Olá, sou ${nom} da ${emp}. Vi a proposta de construção modular e tenho interesse nestes módulos:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nPodem montar uma maquete para nós?'
+    msg: (nom, emp, lista, nota) => `Olá, sou ${nom} da ${emp}. Montei a minha seleção para um site de construção modular e tenho interesse nestes módulos:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nPodem montar uma maquete para nós?'
   };
   /* nivel: 1 básico, 2 intermedio, 3 avanzado */
   const GRUPOS = [

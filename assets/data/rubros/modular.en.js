@@ -15,7 +15,7 @@ window.CB_RUBRO = (() => {
     min: 'Pick at least one module to send it.',
     try: 'Try demo',
     note: 'This is a sample with example values. On your site it would use your models and prices.',
-    msg: (nom, emp, lista, nota) => `Hi, I’m ${nom} from ${emp}. I saw your modular construction proposal and I’m interested in these modules:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nCould you put together a mockup for us?'
+    msg: (nom, emp, lista, nota) => `Hi, I’m ${nom} from ${emp}. I built my selection for a modular construction website and I’m interested in these modules:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nCould you put together a mockup for us?'
   };
   /* nivel: 1 básico, 2 intermedio, 3 avanzado */
   const GRUPOS = [

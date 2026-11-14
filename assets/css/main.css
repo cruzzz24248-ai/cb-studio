@@ -520,3 +520,12 @@ textarea.form-input { min-height: 8.5rem; resize: vertical; line-height: 1.6; }
   .work-frame { animation: none; }
   .device-preview { transform: none !important; }
 }
+
+/* Sección «Incluido» (independiente, después de Proceso) */
+.included-sec { padding: var(--section-y) 0; }
+.included-sub { margin: clamp(2rem, 4vw, 3rem) 0 1rem; color: var(--walnut); font: 600 .72rem/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+.included-head + .included-sub { margin-top: 0; }
+.included-note, .included-foot { max-width: 62ch; color: var(--ink-2); font-size: .95rem; line-height: 1.7; }
+.included-note { margin-bottom: 1rem; }
+.included-foot { margin-top: clamp(1.6rem, 3vw, 2.4rem); }
+@media (min-width: 981px) { .included-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
