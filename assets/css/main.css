@@ -529,4 +529,13 @@ textarea.form-input { min-height: 8.5rem; resize: vertical; line-height: 1.6; }
 .included-note { margin-bottom: 1rem; }
 .included-foot { margin-top: clamp(1.6rem, 3vw, 2.4rem); }
 @media (min-width: 981px) { .included-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-/* v5.1 */
+
+/* Tarjeta «Salud y bienestar»: clínica en tonos verdes, distinta del contenedor */
+.prop-art--salud { background: #DDEDEA; }
+.prop-art--salud .h-wall { fill: #F7FBFA; stroke: #1F5652; stroke-width: 2; }
+.prop-art--salud .h-roof { fill: #2F7F79; }
+.prop-art--salud .c-win { fill: #1F4A47; }
+.prop-art--salud .h-door { fill: #DDEDEA; stroke: #1F5652; stroke-width: 2; }
+.prop-art--salud .h-cross-bg { fill: #2F7F79; }
+.prop-art--salud .h-cross { stroke: #fff; stroke-width: 3; fill: none; }
+.prop-art--salud .c-ground { stroke: #1F5652; }

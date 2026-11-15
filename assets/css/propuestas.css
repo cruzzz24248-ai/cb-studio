@@ -346,3 +346,17 @@
 .pr .incl .more { display: inline-block; margin-top: 18px; color: var(--marron); font-weight: 600; text-decoration: underline; }
 /* La grúa espera a que la figura entre en pantalla (el JS agrega .espera y luego .vista) */
 .pr .ph-art.espera:not(.vista) .drop, .pr .ph-art.espera:not(.vista) .cables { animation-play-state: paused; }
+
+/* Hero de «salud y bienestar»: el consultorio aparece suavemente (sin grúa) */
+@media (prefers-reduced-motion: no-preference) {
+  .pr .ph-art--salud .drop { animation: sube 1s cubic-bezier(.22,.9,.25,1) both; }
+}
+@keyframes sube { from { transform: translateY(28px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Consultorio de «salud y bienestar»: otra paleta y otra silueta que el contenedor */
+.pr .ph-art--salud {
+  background-image: linear-gradient(rgba(47,127,121,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(47,127,121,.1) 1px,transparent 1px);
+}
+.pr .ph-art--salud .win:not(.on) rect { fill: #1F4A47; }
+.pr .ph-art--salud .win rect { stroke: #1F5652; }
+.pr .ph-art--salud .win path:not(.gl) { stroke: #1F5652; }

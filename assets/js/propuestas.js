@@ -33,13 +33,23 @@
     io.observe(fig);
   }
 
+  /* «Salud y bienestar»: el consultorio tiene sus ventanas en otro lugar y el nombre se achica si es largo */
+  const SAL = !!(fig && fig.classList.contains('ph-art--salud'));
+  const VENT = [[176, 114, 70, 52], [274, 114, 70, 52], [46, 196, 46, 56], [428, 196, 46, 56], [100, 196, 46, 56], [374, 196, 46, 56]];
+  if (SAL && emp) $('#cname').setAttribute('font-size', Math.max(10, Math.min(17, Math.floor(300 / emp.length))));
+
   /* Una ventana del contenedor por cada grupo de módulos */
   const NS = 'http://www.w3.org/2000/svg';
   GRUPOS.forEach((_, i) => {
     const g = document.createElementNS(NS, 'g');
     g.setAttribute('class', 'win');
     g.id = `w${i}`;
-    g.innerHTML = `<rect x="${44 + i * 62}" y="118" width="52" height="84" rx="2"/><path class="gl" d="M${50 + i * 62} 196L${74 + i * 62} 124H${84 + i * 62}L${60 + i * 62} 196Z"/><path d="M${70 + i * 62} 118V202M${44 + i * 62} 160H${96 + i * 62}"/>`;
+    if (SAL && VENT[i]) {
+      const [x, y, w, h] = VENT[i];
+      g.innerHTML = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2"/><path d="M${x + w / 2} ${y}V${y + h}M${x} ${y + h / 2}H${x + w}"/>`;
+    } else {
+      g.innerHTML = `<rect x="${44 + i * 62}" y="118" width="52" height="84" rx="2"/><path class="gl" d="M${50 + i * 62} 196L${74 + i * 62} 124H${84 + i * 62}L${60 + i * 62} 196Z"/><path d="M${70 + i * 62} 118V202M${44 + i * 62} 160H${96 + i * 62}"/>`;
+    }
     $('#wins').appendChild(g);
   });
 
