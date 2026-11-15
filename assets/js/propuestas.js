@@ -112,6 +112,9 @@
   $('#form').addEventListener('submit', (e) => {
     e.preventDefault();
     const f = new FormData(e.target);
-    window.open(waUrl(UI.msg(f.get('nombre'), f.get('empresa'), nombres(), f.get('nota'))), '_blank', 'noopener');
+    /* Sin espacios de más al principio o al final (el teclado del celular suele dejar uno) */
+    const v = (k) => String(f.get(k) || '').replace(/\s+/g, ' ').trim();
+    const nota = String(f.get('nota') || '').trim();
+    window.open(waUrl(UI.msg(v('nombre'), v('empresa'), nombres(), nota)), '_blank', 'noopener');
   });
 })();
