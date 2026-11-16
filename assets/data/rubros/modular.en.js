@@ -12,39 +12,50 @@ window.CB_RUBRO = (() => {
     none: 'You haven’t picked anything yet',
     areas: (a, n) => `${a} of ${n} areas lit up`,
     count: n => n + (n === 1 ? ' module' : ' modules'),
-    min: 'Pick at least one module to send it.',
     try: 'Try demo',
     note: 'This is a sample with example values. On your site it would use your models and prices.',
-    msg: (nom, emp, lista, nota) => `Hi, I’m ${nom} from ${emp}. I built my selection for a modular construction website and I’m interested in these modules:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nCould you put together a mockup for us?'
+    msg: (nom, emp, lista, nota) => `Hi, I’m ${nom} from ${emp}. I built my selection for a modular construction website and I’m interested in these modules:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nCould you put together a mockup for us?',
+    pop: "★ Most requested",
+    presets: [["pop", "Most requested"], ["1", "Just the essentials"], ["all", "Select all"], ["0", "Clear"]],
+    send: "Send my selection on WhatsApp",
+    send0: "Ask for recommendations on WhatsApp",
+    min: "No need to pick: you can send it as is and we’ll recommend the most useful modules for your company.",
+    msg0: (nom, emp, nota) => `Hi, I’m ${nom} from ${emp}. I saw the modular construction website proposal and haven’t picked modules yet. Could you recommend which ones make the most sense for us and put together a mockup?` + (nota ? `\n\n${nota}` : ''),
+    tiposT: "A site that shows every use",
+    tiposP: "Homes, offices, rentals and shops: each deserves its own path on the site.",
+    tipos: [["Home", "Ready to live in"], ["Office", "Workspaces"], ["Tourist rental", "Cabins with deck and pergola"], ["Shop", "Cafés, stores and kiosks"], ["Two levels", "Projects that grow upward"]],
+    demosT: "Try what your clients would see",
+    demosP: "Three tools that could live on your site. Tap and play with the values.",
+    cards: [["cfg", "Configurator and quote builder", "Pick a model, finish and extras and see the price instantly."], ["fin", "Financing simulator", "Move the down payment and installments to see the monthly cost."], ["ren", "ROI calculator", "For investors: yearly income and payback in years."]]
   };
-  /* nivel: 1 básico, 2 intermedio, 3 avanzado */
+  /* nivel: 1 básico, 2 intermedio, 3 avanzado · 5.º valor = 1 si es de «lo más pedido» */
   const GRUPOS = [
-    ['Catalog', [
-      ['Model pages', 'One page per model with sizes, rooms, photos and floor plans.', 1],
-      ['Project configurator', 'Clients pick a model, finishes and extras, and see the result.', 2, 'cfg'],
-      ['Model comparison', 'Up to three models side by side.', 1, 'cmp']]],
-    ['Decision tools', [
-      ['Quote builder with PDF', 'The quote builds itself and can be downloaded or sent by WhatsApp.', 3, 'cfg'],
-      ['Online deposit payment', 'Reserve a model by paying the deposit on the site.', 3],
-      ['Financing simulator', 'Down payment, installments and terms at a glance.', 2, 'fin'],
-      ['ROI calculator', 'For tourist rentals: investment and payback in years.', 2, 'ren']]],
-    ['Build', [
-      ['Step-by-step process', 'From idea to delivery, explained with drawings.', 1],
-      ['Build tracking', 'A timeline with photos of each manufacturing stage.', 3]]],
-    ['Reach', [
-      ['Map of delivered projects', 'Projects you can filter by type and region.', 2],
-      ['Business section', 'Camps, offices and developments, with bulk orders.', 1],
-      ['Instagram built in', 'Your latest Instagram projects shown on the site.', 1],
-      ['Lead-qualifying form', 'Land, budget and timeline: inquiries arrive ready to quote.', 2],
-      ['Land and regulations guide', 'What to prepare, what to permit, plus a downloadable checklist.', 1]]],
-    ['Trust', [
-      ['Warranties and certifications', 'What backs the manufacturing, stated clearly.', 1],
-      ['Testimonials and factory video', 'Real clients and the process in plain sight.', 1],
-      ['FAQ', 'Answers questions before they reach your inbox.', 1]]],
-    ['Technical foundation', [
-      ['Multiple languages', 'Spanish, English and Portuguese, with SEO for each.', 2],
-      ['Local SEO', 'To show up when people search for modular construction in your area.', 1],
-      ['Inquiry analytics', 'See which models get the most views and where clients come from.', 1]]]
+    ["Decision tools", [
+      ["Project configurator", "Clients build their model, pick finishes and extras, and see the result instantly.", 2, "cfg", 1],
+      ["Quote builder with PDF", "Clients put their own quote together at any hour and send it to you ready on WhatsApp.", 3, "cfg", 1],
+      ["Financing simulator", "Down payment, installments and terms at a glance: the price question answers itself.", 2, "fin"],
+      ["ROI calculator", "For tourist rentals: investors see how many years it takes to earn back the investment.", 2, "ren"],
+      ["Online deposit payment", "Clients reserve a model by paying the deposit on the site, without waiting for anyone.", 3]]],
+    ["Catalog", [
+      ["Model pages", "One page per model with sizes, rooms, photos and floor plans.", 1, "", 1],
+      ["Model comparison", "Up to three models side by side.", 1, "cmp"]]],
+    ["Trust", [
+      ["Warranties and certifications", "What backs the manufacturing, stated clearly.", 1],
+      ["Testimonials and factory video", "Real clients and the process in plain sight: trust before the first message.", 1, "", 1],
+      ["FAQ", "Answers questions before they reach your inbox.", 1]]],
+    ["Build", [
+      ["Step-by-step process", "From idea to delivery, explained with drawings.", 1],
+      ["Build tracking", "A timeline with photos of each stage: clients watch their module take shape.", 3]]],
+    ["Reach", [
+      ["Lead-qualifying form", "Land, budget and timeline: inquiries arrive ready to quote.", 2, "", 1],
+      ["Map of delivered projects", "Your track record in plain sight, filterable by type and region.", 2],
+      ["Business section", "Camps, offices and developments, with bulk orders.", 1],
+      ["Instagram built in", "Your latest Instagram projects shown on the site.", 1],
+      ["Land and regulations guide", "What to prepare, what to permit, plus a downloadable checklist.", 1]]],
+    ["Technical foundation", [
+      ["Multiple languages", "Spanish, English and Portuguese, with SEO for each.", 2],
+      ["Local SEO", "To show up when people search for modular construction in your area.", 1],
+      ["Inquiry analytics", "See which models get the most views and where clients come from.", 1]]]
   ];
   const NIVELES = ['', 'Basic', 'Intermediate', 'Advanced'];
 

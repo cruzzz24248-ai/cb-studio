@@ -12,39 +12,50 @@ window.CB_RUBRO = (() => {
     none: 'Você ainda não escolheu nada',
     areas: (a, n) => `${a} de ${n} áreas com a luz acesa`,
     count: n => n + (n === 1 ? ' módulo' : ' módulos'),
-    min: 'Marque pelo menos um módulo para poder enviar.',
     try: 'Testar demo',
     note: 'É uma amostra com valores de exemplo. No seu site usaríamos seus modelos e preços.',
-    msg: (nom, emp, lista, nota) => `Olá, sou ${nom} da ${emp}. Montei a minha seleção para um site de construção modular e tenho interesse nestes módulos:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nPodem montar uma maquete para nós?'
+    msg: (nom, emp, lista, nota) => `Olá, sou ${nom} da ${emp}. Montei a minha seleção para um site de construção modular e tenho interesse nestes módulos:\n\n` + lista.map(n => '• ' + n).join('\n') + (nota ? `\n\n${nota}` : '') + '\n\nPodem montar uma maquete para nós?',
+    pop: "★ Mais pedido",
+    presets: [["pop", "Mais pedidos"], ["1", "Só o essencial"], ["all", "Selecionar tudo"], ["0", "Limpar"]],
+    send: "Enviar minha seleção por WhatsApp",
+    send0: "Pedir recomendação por WhatsApp",
+    min: "Não precisa escolher: pode enviar assim e recomendamos os módulos mais úteis para a sua empresa.",
+    msg0: (nom, emp, nota) => `Olá, sou ${nom} da ${emp}. Vi a proposta de site para construção modular e ainda não escolhi módulos. Podem me recomendar quais fazem mais sentido para nós e montar uma maquete?` + (nota ? `\n\n${nota}` : ''),
+    tiposT: "Um site que mostra cada uso",
+    tiposP: "Casas, escritórios, hospedagens e lojas: cada um merece o seu próprio caminho no site.",
+    tipos: [["Casa", "Pronta para morar"], ["Escritório", "Espaços de trabalho"], ["Hospedagem turística", "Chalés com deck e pérgola"], ["Loja", "Cafés, lojas e quiosques"], ["Dois níveis", "Projetos que crescem em altura"]],
+    demosT: "Teste o que o seu cliente veria",
+    demosP: "Três ferramentas que podem viver no seu site. Toque e brinque com os valores.",
+    cards: [["cfg", "Configurador e orçamento", "Escolha modelo, acabamento e extras e veja o valor na hora."], ["fin", "Simulador de financiamento", "Mexa na entrada e nas parcelas e veja quanto paga por mês."], ["ren", "Calculadora de rentabilidade", "Para investidores: renda anual e anos de retorno."]]
   };
-  /* nivel: 1 básico, 2 intermedio, 3 avanzado */
+  /* nivel: 1 básico, 2 intermedio, 3 avanzado · 5.º valor = 1 si es de «lo más pedido» */
   const GRUPOS = [
-    ['Catálogo', [
-      ['Páginas de modelos', 'Uma página por modelo com medidas, ambientes, fotos e plantas.', 1],
-      ['Configurador de projeto', 'O cliente escolhe modelo, acabamentos e extras e vê o resultado.', 2, 'cfg'],
-      ['Comparador de modelos', 'Até três modelos lado a lado.', 1, 'cmp']]],
-    ['Ferramentas para decidir', [
-      ['Orçamento com PDF', 'O orçamento se monta sozinho e pode ser baixado ou enviado por WhatsApp.', 3, 'cfg'],
-      ['Sinal online', 'Reservar um modelo pagando o sinal pelo site.', 3],
-      ['Simulador de financiamento', 'Entrada, parcelas e prazos à vista.', 2, 'fin'],
-      ['Calculadora de rentabilidade', 'Para hospedagens turísticas: investimento e anos de retorno.', 2, 'ren']]],
-    ['Obra', [
-      ['Processo passo a passo', 'Da ideia à entrega, explicado com desenhos.', 1],
-      ['Acompanhamento da obra', 'Linha do tempo com fotos de cada etapa da fabricação.', 3]]],
-    ['Alcance', [
-      ['Mapa de obras entregues', 'Projetos filtráveis por tipo e estado.', 2],
-      ['Área para empresas', 'Acampamentos, escritórios e empreendimentos, com pedido por volume.', 1],
-      ['Instagram integrado', 'Suas últimas obras do Instagram exibidas no site.', 1],
-      ['Formulário que qualifica o cliente', 'Terreno, orçamento e prazo: os contatos chegam prontos para orçar.', 2],
-      ['Guia do terreno e normas', 'O que preparar, o que licenciar e um checklist para baixar.', 1]]],
-    ['Confiança', [
-      ['Garantias e certificações', 'O que respalda a fabricação, de forma clara.', 1],
-      ['Depoimentos e vídeo da fábrica', 'Clientes reais e o processo à vista.', 1],
-      ['Perguntas frequentes', 'Responde as dúvidas antes que cheguem por mensagem.', 1]]],
-    ['Base técnica', [
-      ['Vários idiomas', 'Espanhol, inglês e português, com SEO para cada um.', 2],
-      ['SEO local', 'Para aparecer quando buscam construção modular na sua região.', 1],
-      ['Estatísticas de contatos', 'Saber quais modelos mais são vistos e de onde vêm os clientes.', 1]]]
+    ["Ferramentas para decidir", [
+      ["Configurador de projeto", "O cliente monta o seu modelo, escolhe acabamentos e extras e vê o resultado na hora.", 2, "cfg", 1],
+      ["Orçamento com PDF", "O cliente monta o orçamento sozinho, a qualquer hora, e envia pronto por WhatsApp.", 3, "cfg", 1],
+      ["Simulador de financiamento", "Entrada, parcelas e prazos à vista: a dúvida sobre o preço se resolve sozinha.", 2, "fin"],
+      ["Calculadora de rentabilidade", "Para hospedagens turísticas: o investidor vê em quantos anos recupera o investimento.", 2, "ren"],
+      ["Sinal online", "Reservam um modelo pagando o sinal pelo site, sem esperar por ninguém.", 3]]],
+    ["Catálogo", [
+      ["Páginas de modelos", "Uma página por modelo com medidas, ambientes, fotos e plantas.", 1, "", 1],
+      ["Comparador de modelos", "Até três modelos lado a lado.", 1, "cmp"]]],
+    ["Confiança", [
+      ["Garantias e certificações", "O que respalda a fabricação, de forma clara.", 1],
+      ["Depoimentos e vídeo da fábrica", "Clientes reais e o processo à vista: confiança antes da primeira mensagem.", 1, "", 1],
+      ["Perguntas frequentes", "Responde as dúvidas antes que cheguem por mensagem.", 1]]],
+    ["Obra", [
+      ["Processo passo a passo", "Da ideia à entrega, explicado com desenhos.", 1],
+      ["Acompanhamento da obra", "Linha do tempo com fotos de cada etapa: o cliente vê o módulo ganhando forma.", 3]]],
+    ["Alcance", [
+      ["Formulário que qualifica o cliente", "Terreno, orçamento e prazo: os contatos chegam prontos para orçar.", 2, "", 1],
+      ["Mapa de obras entregues", "Sua trajetória à vista, filtrável por tipo e estado.", 2],
+      ["Área para empresas", "Acampamentos, escritórios e empreendimentos, com pedido por volume.", 1],
+      ["Instagram integrado", "Suas últimas obras do Instagram exibidas no site.", 1],
+      ["Guia do terreno e normas", "O que preparar, o que licenciar e um checklist para baixar.", 1]]],
+    ["Base técnica", [
+      ["Vários idiomas", "Espanhol, inglês e português, com SEO para cada um.", 2],
+      ["SEO local", "Para aparecer quando buscam construção modular na sua região.", 1],
+      ["Estatísticas de contatos", "Saber quais modelos mais são vistos e de onde vêm os clientes.", 1]]]
   ];
   const NIVELES = ['', 'Básico', 'Intermediário', 'Avançado'];
 
