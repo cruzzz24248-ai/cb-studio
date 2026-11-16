@@ -539,3 +539,12 @@ textarea.form-input { min-height: 8.5rem; resize: vertical; line-height: 1.6; }
 .prop-art--salud .h-cross-bg { fill: #2F7F79; }
 .prop-art--salud .h-cross { stroke: #fff; stroke-width: 3; fill: none; }
 .prop-art--salud .c-ground { stroke: #1F5652; }
+
+/* Tarjeta «Gastronomía»: local con toldo a rayas, en terracota */
+.prop-art--gastro { background: #F4E4D4; }
+.prop-art--gastro .g-wall { fill: #F6E7D4; stroke: #7A3B25; stroke-width: 2; }
+.prop-art--gastro .g-sign, .prop-art--gastro .g-a { fill: #B5482F; }
+.prop-art--gastro .g-b { fill: #FFF4E6; }
+.prop-art--gastro .c-win { fill: #3A2A22; }
+.prop-art--gastro .g-door { fill: #6B7A3E; stroke: #7A3B25; stroke-width: 2; }
+.prop-art--gastro .c-ground { stroke: #7A3B25; }

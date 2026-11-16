@@ -349,7 +349,7 @@
 
 /* Hero de «salud y bienestar»: el consultorio aparece suavemente (sin grúa) */
 @media (prefers-reduced-motion: no-preference) {
-  .pr .ph-art--salud .drop { animation: sube 1s cubic-bezier(.22,.9,.25,1) both; }
+  .pr .ph-art--salud .drop, .pr .ph-art--gastro .drop { animation: sube 1s cubic-bezier(.22,.9,.25,1) both; }
 }
 @keyframes sube { from { transform: translateY(28px); opacity: 0; } to { transform: none; opacity: 1; } }
 
@@ -360,3 +360,17 @@
 .pr .ph-art--salud .win:not(.on) rect { fill: #1F4A47; }
 .pr .ph-art--salud .win rect { stroke: #1F5652; }
 .pr .ph-art--salud .win path:not(.gl) { stroke: #1F5652; }
+
+/* Local gastronómico: toldo a rayas y tonos terracota */
+.pr .ph-art--gastro {
+  background-image: linear-gradient(rgba(181,72,47,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(181,72,47,.09) 1px,transparent 1px);
+}
+.pr .ph-art--gastro .win:not(.on) rect { fill: #3A2A22; }
+.pr .ph-art--gastro .win rect { stroke: #7A3B25; }
+.pr .ph-art--gastro .win path:not(.gl) { stroke: #7A3B25; }
+
+/* Preguntas frecuentes de cada propuesta */
+.pr .faq-sec { padding: clamp(36px,6vw,72px) var(--pad); max-width: 1320px; margin: auto; border-top: 1px solid var(--borde); }
+.pr .faq-sec details { padding: 14px 0; border-bottom: 1px solid var(--borde); }
+.pr .faq-sec summary { cursor: pointer; font-weight: 600; }
+.pr .faq-sec details p { max-width: 70ch; margin-top: 8px; color: var(--suave); line-height: 1.7; }
