@@ -4,7 +4,7 @@
    Los textos y el número de WhatsApp llegan desde <script id="cb-config">,
    que genera src/build.py: acá adentro no hay textos por idioma.
 
-   1 Utilidades y config   5 Vistas previas de trabajos
+   1 Utilidades y config   5 (libre)
    2 Menú y selector       6 Animaciones de entrada
    3 Scroll (un solo       7 Efectos de cursor
      listener)             8 Formulario → WhatsApp
@@ -116,37 +116,13 @@
     $$('main section[id], footer[id]').forEach((s) => spy.observe(s));
   }
 
-  /* 5 ── VISTAS PREVIAS DE TRABAJOS ──────────────────────────────────────── */
-  // Cada iframe se escala para simular una pantalla de 1440 px (escritorio) o 390 px (celular)
-  const fit = () => $$('.work-frame').forEach((box) => {
-    const f = $('iframe', box);
-    if (f && box.clientWidth) f.style.transform = `scale(${box.clientWidth / (box.classList.contains('work-frame--mobile') ? 390 : 1440)})`;
-  });
-  fit();
-  if ('ResizeObserver' in window) { const ro = new ResizeObserver(fit); $$('.work-frame').forEach((b) => ro.observe(b)); }
-  else addEventListener('resize', fit);
-
-  // Los sitios de demo se cargan recién cuando están por verse (evita tirones al scrollear)
-  const loadFrame = (f) => {
-    f.src = f.dataset.src;
-    f.removeAttribute('data-src');
-    f.addEventListener('load', () => f.classList.add('is-loaded'), { once: true });
-  };
-  const frames = $$('.work-frame iframe[data-src]');
-  if (hasIO) {
-    const fio = new IntersectionObserver((entries) => entries.forEach((en) => {
-      if (en.isIntersecting) { fio.unobserve(en.target); loadFrame(en.target); }
-    }), { rootMargin: '300px 0px' });
-    frames.forEach((f) => fio.observe(f));
-  } else frames.forEach(loadFrame);
-
   /* 6 ── ANIMACIONES DE ENTRADA (solo si el navegador y la persona lo permiten) */
   // [selector, tipo de entrada]
   const BLOCKS = [
-    ['.section-tag, .work-intro, .approach-description, .about-description, .contact-description, .props-lead, .faq-cta', 'soft'],
+    ['.section-tag, .approach-description, .about-description, .contact-description, .props-lead, .faq-cta', 'soft'],
     ['.pillar-item', 'up'], ['.solutions-header', 'soft'], ['.solution-card', 'up'],
     ['.props-steps li', 'soft'], ['.prop-card', 'up'], ['.included-head', 'soft'], ['.included-item', 'soft'],
-    ['.work-card', 'scale'], ['.work-more', 'soft'], ['.process-step-item', 'left'],
+    ['.process-step-item', 'left'],
     ['.faq-item', 'soft'], ['.about-location, .about-values, .contact-direct', 'soft'],
     ['.form-group, .form-submit-btn, .form-note', 'soft'],
   ];
@@ -225,14 +201,6 @@
         b.style.setProperty('--my', `${clamp((e.clientY - (r.top + r.height / 2)) * 0.28, 5)}px`);
       });
       b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
-    });
-    $$('.work-card').forEach((c) => {
-      c.addEventListener('pointermove', (e) => {
-        const r = c.getBoundingClientRect();
-        c.style.setProperty('--nx', ((e.clientX - r.left) / r.width - 0.5) * 2);
-        c.style.setProperty('--ny', ((e.clientY - r.top) / r.height - 0.5) * 2);
-      });
-      c.addEventListener('pointerleave', () => { c.style.setProperty('--nx', 0); c.style.setProperty('--ny', 0); });
     });
     $$('.solution-card').forEach((c) => {
       c.addEventListener('pointermove', (e) => {
