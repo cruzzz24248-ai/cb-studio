@@ -119,9 +119,9 @@
   /* 6 ── ANIMACIONES DE ENTRADA (solo si el navegador y la persona lo permiten) */
   // [selector, tipo de entrada]
   const BLOCKS = [
-    ['.section-tag, .approach-description, .about-description, .contact-description, .props-lead, .faq-cta', 'soft'],
+    ['.section-tag, .approach-description, .about-description, .contact-description, .faq-cta', 'soft'],
     ['.pillar-item', 'up'], ['.solutions-header', 'soft'], ['.solution-card', 'up'],
-    ['.props-steps li', 'soft'], ['.prop-card', 'up'], ['.included-head', 'soft'], ['.included-item', 'soft'],
+    ['.props-steps li', 'soft'], ['.prop-card', 'up'], ['.included-head', 'soft'], ['.included-item', 'soft'], ['.included-panel', 'soft'], ['.included-foot', 'soft'],
     ['.process-step-item', 'left'],
     ['.faq-item', 'soft'], ['.about-location, .about-values, .contact-direct', 'soft'],
     ['.form-group, .form-submit-btn, .form-note', 'soft'],
