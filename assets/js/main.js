@@ -66,6 +66,23 @@
   toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
 
   const eye = $('.hero-eye-image');
+
+  /* Hero: el ojo se «abre» recién cuando la imagen ya se descargó y decodificó.
+     En el celular puede tardar; sin esta espera la animación terminaba antes de que la foto llegara. */
+  const eyeFig = $('.hero-eye-visual');
+  if (eyeFig && eye && !reduce) {
+    eyeFig.classList.add('eye-hold');
+    let opened = false;
+    const openEye = () => {
+      if (opened) return;
+      opened = true;
+      requestAnimationFrame(() => eyeFig.classList.remove('eye-hold'));
+    };
+    const whenReady = () => (eye.decode ? eye.decode().catch(() => {}) : Promise.resolve()).then(openEye);
+    if (eye.complete && eye.naturalWidth) whenReady();
+    else { eye.addEventListener('load', whenReady, { once: true }); eye.addEventListener('error', openEye, { once: true }); }
+    setTimeout(openEye, 4000);          // red de seguridad: nunca queda oculto
+  }
   const track = $('.vibe-track');
   const marquee = track && track.getAnimations ? track.getAnimations()[0] : null;
   let lastY = scrollY, vel = 0, rate = 1, easing = false, ticking = false;
